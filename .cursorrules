@@ -1,0 +1,172 @@
+# ChatbotAI – Tech Stack Rules
+
+## Project Overview
+
+Full-stack AI chatbot platform with a React frontend and Node.js API server. Supports multi-tenant workspaces, document RAG, multiple LLM providers, and vector databases.
+
+---
+
+## Frontend
+
+| Layer | Technology | Version |
+|-------|------------|---------|
+| Runtime | Vite | 4.x |
+| Framework | React | 18.2 |
+| Routing | react-router-dom | 6.x |
+| Styling | Tailwind CSS | 3.x |
+| Icons | @phosphor-icons/react | 2.x |
+| Charts | Recharts, @tremor/react | - |
+| HTTP/SSE | @microsoft/fetch-event-source | - |
+
+### Frontend Rules
+
+- **Language**: JavaScript (ES modules) with JSX. No TypeScript.
+- **Path alias**: Use `@/` for `frontend/src/` (e.g. `@/components`, `@/config/projectIdentity`).
+- **Styling**: Tailwind utility classes only. Use existing theme colors from `tailwind.config.js` (sidebar, accent, main-gradient, etc.).
+- **Components**: Functional components with hooks. Use `lazy()` for code-splitting of page routes.
+- **State**: React Context for auth, logo, and profile. Avoid introducing new global state libraries.
+- **Lint**: ESLint with Prettier. Hermes parser, flow annotations allowed.
+
+---
+
+## Backend
+
+| Layer | Technology | Version |
+|-------|------------|---------|
+| Runtime | Node.js | >= 18.12.1 |
+| Framework | Express | 4.x |
+| ORM | Prisma | 5.3 |
+| WebSockets | express-ws | 5.x |
+
+### AI / LLM Stack
+
+- LangChain (core, community, openai, anthropic)
+- OpenAI, Anthropic, Azure OpenAI, Google Generative AI
+- Ollama, node-llama-cpp for local models
+- js-tiktoken for tokenization
+
+### Vector Databases
+
+- ChromaDB, LanceDB (vectordb), Pinecone, Qdrant, Weaviate, Astra DB, Milvus
+
+### Backend Rules
+
+- **Structure**: `server/endpoints/`, `server/models/`, `server/utils/`, `server/prisma/`.
+- **API**: REST over `/api`. Swagger for docs (`server/swagger/`).
+- **Auth**: JWT via `jsonwebtoken`. Supports single-user (password) and multi-user modes.
+- **Validation**: Joi for request validation.
+- **Database**: Prisma migrations. Supports SQLite, PostgreSQL, MySQL, MSSQL.
+
+---
+
+## Shared Conventions
+
+- **Module format**: ES modules (`"type": "module"`).
+- **Imports**: Prefer named imports. Use path aliases where available.
+- **Formatting**: Prettier (run `yarn prettier --write`).
+- **Project identity**: Use `@/config/projectIdentity` for branding/display strings instead of hardcoding.
+- **Environment**: `.env` for secrets. No secrets in source control.
+
+---
+
+## Structure
+
+Key folders and what they're for:
+
+| Path | Purpose |
+|------|---------|
+| `frontend/src/components/` | Shared UI components |
+| `frontend/src/config/` | App config (projectIdentity, etc.) |
+| `frontend/src/models/` | API client modules (fetch wrappers) |
+| `frontend/src/pages/` | Route-level page components |
+| `frontend/src/utils/` | Frontend helpers, paths, constants |
+| `frontend/src/hooks/` | Custom React hooks |
+| `frontend/src/media/` | Images, logos, illustrations |
+| `server/endpoints/` | API route handlers (workspaces, chat, admin, etc.) |
+| `server/models/` | Data access and business logic |
+| `server/utils/` | Middleware, helpers, vector DB providers |
+| `server/prisma/` | Schema and migrations |
+| `server/storage/` | SQLite DB file, persistent data |
+| `server/documents/` | Uploaded document files |
+| `server/vector-cache/` | LanceDB vector storage (when used) |
+| `server/swagger/` | OpenAPI / Swagger definitions |
+| `server/public/` | Built frontend assets (production) |
+| `embed/` | Embeddable chat widget (Vite) |
+| `docker/` | Dockerfile, entrypoint, healthcheck, .env.example, DEPLOYMENT-HUAWEI-CLOUD.md |
+
+---
+
+## Conventions
+
+### Naming
+
+- **Components**: PascalCase (e.g. `WorkspaceChat`, `SingleUserAuth`).
+- **Files**: Match export (e.g. `CustomAppName/index.jsx`).
+- **Utils/hooks**: camelCase (e.g. `useModal`, `showToast`).
+- **API endpoints**: kebab-case in URLs, camelCase in code.
+
+### State Management
+
+- **Global**: React Context only (AuthContext, LogoContext, PfpProvider). No Redux/Zustand.
+- **Local**: `useState`, `useEffect`, custom hooks.
+- **Server state**: Fetch in components or models; no React Query/SWR.
+
+### API Style
+
+- REST over `/api`. All routes mounted on `apiRouter` in `server/index.js`.
+- Check `server/endpoints/` for route definitions.
+- Request body via `reqBody(request)` helper.
+- Responses: JSON with `{ success, error?, message?, ... }`.
+
+### Env Files
+
+- **Server**: `server/.env` (or `server/.env.development` in dev). Loaded via dotenv.
+- **Frontend**: `frontend/.env` for build-time vars (e.g. VITE_*). Use `import.meta.env` in code.
+- **Docker**: `docker/.env.example` → copied to `server/.env` in image. Use `server/.env.example` as reference.
+- **Never commit** `.env` or secrets. Use `.env.example` as templates.
+
+---
+
+## Deployment
+
+> **Canonical deployment guide**: Follow `docker/DEPLOYMENT-HUAWEI-CLOUD.md` for Huawei Cloud deployment. Do not hallucinate deployment steps—use that file.
+
+### Target
+
+- **Cloud**: Huawei Cloud (ECS, CCE, or equivalent).
+- **Run methods**: Docker, ECS container, CCE (Kubernetes).
+
+### How to Run
+
+1. **Docker** (recommended):
+   - Build: `docker build -t chatbotai .`
+   - Run: mount `server/.env` and persist `server/storage`, `server/documents`, `server/vector-cache`
+   - Port: 3001 (server), 3000 (dev frontend only)
+
+2. **ECS / CCE**:
+   - Use Docker image. Set env vars via container config or secrets.
+   - Ensure writable volumes for `storage`, `documents`, `vector-cache`.
+
+### Important Env Vars (server)
+
+| Var | Required | Purpose |
+|-----|----------|---------|
+| `AUTH_TOKEN` | Yes (single-user) | Password for single-user mode |
+| `JWT_SECRET` | Yes (multi-user) | JWT signing secret |
+| `NODE_ENV` | No | `development` or `production` |
+| `SERVER_PORT` | No | Default 3001 |
+| `ENABLE_HTTPS` | No | Enable SSL |
+| `DATABASE_URL` | If using PostgreSQL | Prisma connection string |
+| `OPENAI_API_KEY` | For LLM | And other provider keys as needed |
+
+---
+
+## Explicit Rules
+
+- **Always check `server/endpoints/`** for API routes before adding new ones.
+- **Don't assume we use PostgreSQL.** Default is SQLite (`server/storage/anythingllm.db`). PostgreSQL/MySQL/MSSQL are opt-in via Prisma schema.
+- **Don't assume TypeScript.** This project is JavaScript (JS/JSX) only.
+- **Use `@/config/projectIdentity`** for branding strings. Don't hardcode app names.
+- **Use Tailwind** for styling. Don't add new CSS frameworks or inline styles.
+- **Follow existing patterns** in `server/models/` and `frontend/src/models/` for API calls.
+- **No secrets in source.** Use `.env` and never commit API keys or tokens.
