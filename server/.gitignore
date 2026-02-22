@@ -20,5 +20,8 @@ documents
 vector-cache
 yarn-error.log
 
+# Override root: Docker build requires yarn.lock
+!yarn.lock
+
 # Local SSL Certs for HTTPS
 sslcert
