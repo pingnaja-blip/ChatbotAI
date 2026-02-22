@@ -8,7 +8,7 @@ export default function DocumentSimilarityThreshold({
         <label htmlFor="name" className="block input-label">
           Document similarity threshold
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           The minimum similarity score required for a source to be considered
           related to the chat. The higher the number, the more similar the
           source must be to the chat.
@@ -17,7 +17,7 @@ export default function DocumentSimilarityThreshold({
       <select
         name="similarityThreshold"
         defaultValue={workspace?.similarityThreshold ?? 0.25}
-        className="bg-zinc-900 text-white text-sm mt-2 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="theme-input mt-2 block w-full"
         onChange={() => setHasChanges(true)}
         required={true}
       >

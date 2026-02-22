@@ -9,15 +9,15 @@ export default function ConnectorOption({
   return (
     <button
       onClick={() => setSelectedConnector(slug)}
-      className={`flex text-left gap-x-3.5 items-center py-2 px-4 hover:bg-white/10 ${
-        selectedConnector === slug ? "bg-white/10" : ""
+      className={`flex text-left gap-x-3.5 items-center py-2 px-4 hover:bg-slate-200 ${
+        selectedConnector === slug ? "bg-slate-200" : ""
       } rounded-lg cursor-pointer w-full`}
     >
       <img src={image} alt={name} className="w-[40px] h-[40px] rounded-md" />
       <div className="flex flex-col">
-        <div className="text-white font-bold text-[14px]">{name}</div>
+        <div className="text-slate-800 font-bold text-[14px]">{name}</div>
         <div>
-          <p className="text-[12px] text-white/60">{description}</p>
+          <p className="text-[12px] text-slate-600">{description}</p>
         </div>
       </div>
     </button>

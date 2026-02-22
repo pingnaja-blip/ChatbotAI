@@ -18,7 +18,7 @@ export default function ChatModelSelection({
           <label htmlFor="name" className="block input-label">
             Workspace Chat model
           </label>
-          <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+          <p className="text-theme-text-muted text-xs font-medium py-1.5">
             The specific chat model that will be used for this workspace. If
             empty, will use the system LLM preference.
           </p>
@@ -27,7 +27,7 @@ export default function ChatModelSelection({
           name="chatModel"
           required={true}
           disabled={true}
-          className="bg-zinc-900 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="theme-input block w-full"
         >
           <option disabled={true} selected={true}>
             -- waiting for models --
@@ -43,7 +43,7 @@ export default function ChatModelSelection({
         <label htmlFor="name" className="block input-label">
           Workspace Chat model
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           The specific chat model that will be used for this workspace. If
           empty, will use the system LLM preference.
         </p>
@@ -55,7 +55,7 @@ export default function ChatModelSelection({
         onChange={() => {
           setHasChanges(true);
         }}
-        className="bg-zinc-900 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="theme-input block w-full"
       >
         {defaultModels.length > 0 && (
           <optgroup label="General models">

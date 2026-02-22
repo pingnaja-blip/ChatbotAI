@@ -24,12 +24,12 @@ function WorkspaceDirectory({
     return (
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
+          <h3 className="text-slate-800 text-base font-bold ml-5">
             {workspace.name}
           </h3>
         </div>
-        <div className="relative w-[560px] h-[445px] bg-zinc-900 rounded-2xl mt-5">
-          <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-8">
+        <div className="relative w-[560px] h-[445px] bg-slate-100 rounded-2xl mt-5 border border-slate-200">
+          <div className="text-slate-700 text-xs font-semibold grid grid-cols-12 py-2 px-8 border-b border-slate-300 bg-slate-200">
             <p className="col-span-5">Name</p>
             <p className="col-span-3">Date</p>
             <p className="col-span-2">Kind</p>
@@ -37,7 +37,7 @@ function WorkspaceDirectory({
           </div>
           <div className="w-full h-full flex items-center justify-center flex-col gap-y-5">
             <PreLoader />
-            <p className="text-white/80 text-sm font-semibold animate-pulse text-center w-1/3">
+            <p className="text-slate-700 text-sm font-semibold animate-pulse text-center w-1/3">
               {loadingMessage}
             </p>
           </div>
@@ -50,16 +50,16 @@ function WorkspaceDirectory({
     <>
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
+          <h3 className="text-slate-800 text-base font-bold ml-5">
             {workspace.name}
           </h3>
         </div>
         <div
-          className={`relative w-[560px] h-[445px] bg-zinc-900 rounded-2xl mt-5 overflow-y-auto border-4 ${
-            highlightWorkspace ? "border-cyan-300/80" : "border-transparent"
+          className={`relative w-[560px] h-[445px] bg-slate-100 rounded-2xl mt-5 overflow-y-auto border-4 ${
+            highlightWorkspace ? "border-cyan-400" : "border-slate-200"
           }`}
         >
-          <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-8 border-b border-white/20 bg-zinc-900 sticky top-0 z-10">
+          <div className="text-slate-700 text-xs font-semibold grid grid-cols-12 py-2 px-8 border-b border-slate-300 bg-slate-200 sticky top-0 z-10">
             <p className="col-span-5">Name</p>
             <p className="col-span-3">Date</p>
             <p className="col-span-2">Kind</p>
@@ -88,7 +88,7 @@ function WorkspaceDirectory({
               </>
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <p className="text-white text-opacity-40 text-sm font-medium">
+                <p className="text-slate-500 text-sm font-medium">
                   No Documents
                 </p>
               </div>
@@ -97,7 +97,7 @@ function WorkspaceDirectory({
         </div>
         {hasChanges && (
           <div className="flex items-center justify-between py-6">
-            <div className="text-white/80">
+            <div className="text-slate-700">
               <p className="text-sm font-semibold">
                 {embeddingCosts === 0
                   ? ""
@@ -114,7 +114,7 @@ function WorkspaceDirectory({
 
             <button
               onClick={saveChanges}
-              className="border border-slate-200 px-5 py-2.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+              className="border border-slate-300 px-5 py-2.5 rounded-lg text-slate-800 text-sm font-semibold items-center flex gap-x-2 hover:bg-slate-200 focus:ring-slate-400"
             >
               Save and Embed
             </button>
@@ -148,15 +148,15 @@ const PinAlert = memo(() => {
     <ModalWrapper isOpen={showAlert}>
       <div className="relative w-full max-w-2xl max-h-full">
         <div className="relative bg-main-gradient rounded-lg shadow">
-          <div className="flex items-start justify-between p-4 rounded-t border-gray-500/50">
+          <div className="flex items-start justify-between p-4 rounded-t border-gray-200">
             <div className="flex items-center gap-2">
               <PushPin className="text-red-600 text-lg w-6 h-6" weight="fill" />
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="text-xl font-semibold text-slate-800">
                 What is document pinning?
               </h3>
             </div>
           </div>
-          <div className="w-full p-6 text-white text-md flex flex-col gap-y-2">
+          <div className="w-full p-6 text-slate-800 text-md flex flex-col gap-y-2">
             <p>
               When you <b>pin</b> a document in AnythingLLM we will inject the
               entire content of the document into your prompt window for your
@@ -173,11 +173,11 @@ const PinAlert = memo(() => {
             </p>
           </div>
 
-          <div className="flex w-full justify-between items-center p-6 space-x-2 border-t rounded-b border-gray-500/50">
+          <div className="flex w-full justify-between items-center p-6 space-x-2 border-t rounded-b border-gray-200">
             <button disabled={true} className="invisible" />
             <button
               onClick={dismissAlert}
-              className="border border-slate-200 px-4 py-2 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+              className="border border-slate-300 px-4 py-2 rounded-lg text-slate-800 text-sm font-medium items-center flex gap-x-2 hover:bg-slate-200 focus:ring-slate-400"
             >
               Okay, got it
             </button>

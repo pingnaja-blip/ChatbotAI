@@ -112,7 +112,7 @@ const Document = {
     }
 
     await Telemetry.sendTelemetry("documents_embedded_in_workspace", {
-      LLMSelection: process.env.LLM_PROVIDER || "openai",
+      LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
       Embedder: process.env.EMBEDDING_ENGINE || "inherit",
       VectorDbSelection: process.env.VECTOR_DB || "lancedb",
     });
@@ -155,7 +155,7 @@ const Document = {
     }
 
     await Telemetry.sendTelemetry("documents_removed_in_workspace", {
-      LLMSelection: process.env.LLM_PROVIDER || "openai",
+      LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
       Embedder: process.env.EMBEDDING_ENGINE || "inherit",
       VectorDbSelection: process.env.VECTOR_DB || "lancedb",
     });

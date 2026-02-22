@@ -16,6 +16,33 @@ const {
 } = require("../utils/middleware/validWorkspace");
 const { writeResponseChunk } = require("../utils/helpers/chat/responses");
 
+function chatErrorMessage(rawMessage = "") {
+  const lower = (rawMessage || "").toLowerCase();
+  const isApiKeyOrAuth =
+    lower.includes("401") ||
+    lower.includes("incorrect api key") ||
+    lower.includes("apikey") ||
+    lower.includes("aliyun") ||
+    lower.includes("authentication fail") ||
+    lower.includes("governor");
+  const provider = process.env.LLM_PROVIDER || "generic-openai";
+  const basePath = (process.env.GENERIC_OPEN_AI_BASE_PATH || "").toLowerCase();
+  const isPointingAtDeepseek = basePath.includes("deepseek");
+
+  if (isApiKeyOrAuth && provider === "generic-openai") {
+    if (isPointingAtDeepseek) {
+      return (
+        "DeepSeek authentication failed. Set your DeepSeek API key in General Settings → LLM Preference (get a key at https://platform.deepseek.com). Do not use your Aliyun/DashScope key here — that is only for document OCR."
+      );
+    }
+    return (
+      (rawMessage && rawMessage.trim() ? rawMessage.trim() + " " : "") +
+      "To use DeepSeek for chat: set LLM base URL to https://api.deepseek.com and your DeepSeek API key in General Settings → LLM Preference (Aliyun/DashScope is only used by the document processor for OCR, not for chat)."
+    );
+  }
+  return rawMessage;
+}
+
 function chatEndpoints(app) {
   if (!app) return;
 
@@ -90,7 +117,7 @@ function chatEndpoints(app) {
         );
         await Telemetry.sendTelemetry("sent_chat", {
           multiUserMode: multiUserMode(response),
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
         });
@@ -112,7 +139,7 @@ function chatEndpoints(app) {
           textResponse: null,
           sources: [],
           close: true,
-          error: e.message,
+          error: chatErrorMessage(e.message),
         });
         response.end();
       }
@@ -198,7 +225,7 @@ function chatEndpoints(app) {
         );
         await Telemetry.sendTelemetry("sent_chat", {
           multiUserMode: multiUserMode(response),
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
         });
@@ -221,7 +248,7 @@ function chatEndpoints(app) {
           textResponse: null,
           sources: [],
           close: true,
-          error: e.message,
+          error: chatErrorMessage(e.message),
         });
         response.end();
       }

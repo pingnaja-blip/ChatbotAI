@@ -22,13 +22,13 @@ export default function FolderRow({
     <>
       <tr
         onClick={onRowClick}
-        className={`text-white/80 text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 bg-[#1C1E21] hover:bg-sky-500/20 cursor-pointer w-full file-row ${
-          selected ? "selected" : ""
+        className={`text-slate-700 text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 bg-slate-50 hover:bg-sky-100 cursor-pointer w-full file-row border-b border-slate-200 ${
+          selected ? "selected bg-sky-50" : ""
         }`}
       >
         <div className="col-span-6 flex gap-x-[4px] items-center">
           <div
-            className="shrink-0 w-3 h-3 rounded border-[1px] border-white flex justify-center items-center cursor-pointer"
+            className="shrink-0 w-3 h-3 rounded border-[1px] border-slate-600 flex justify-center items-center cursor-pointer"
             role="checkbox"
             aria-checked={selected}
             tabIndex={0}
@@ -37,18 +37,18 @@ export default function FolderRow({
               toggleSelection(item);
             }}
           >
-            {selected && <div className="w-2 h-2 bg-white rounded-[2px]" />}
+            {selected && <div className="w-2 h-2 bg-slate-700 rounded-[2px]" />}
           </div>
           <div
             onClick={handleExpandClick}
-            className={`transform transition-transform duration-200 ${
+            className={`transform transition-transform duration-200 text-slate-700 ${
               expanded ? "rotate-360" : " rotate-270"
             }`}
           >
             <CaretDown className="text-base font-bold w-4 h-4" />
           </div>
           <FolderNotch
-            className="shrink-0 text-base font-bold w-4 h-4 mr-[3px]"
+            className="shrink-0 text-base font-bold w-4 h-4 mr-[3px] text-slate-700"
             weight="fill"
           />
           <p className="whitespace-nowrap overflow-show">

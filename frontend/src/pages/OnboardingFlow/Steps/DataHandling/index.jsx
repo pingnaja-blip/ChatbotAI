@@ -312,7 +312,7 @@ export const EMBEDDING_ENGINE_PRIVACY = {
 };
 
 export default function DataHandling({ setHeader, setForwardBtn, setBackBtn }) {
-  const [llmChoice, setLLMChoice] = useState("openai");
+  const [llmChoice, setLLMChoice] = useState("deepseek");
   const [loading, setLoading] = useState(true);
   const [vectorDb, setVectorDb] = useState("pinecone");
   const [embeddingEngine, setEmbeddingEngine] = useState("openai");
@@ -324,7 +324,14 @@ export default function DataHandling({ setHeader, setForwardBtn, setBackBtn }) {
     setBackBtn({ showing: false, disabled: false, onClick: handleBack });
     async function fetchKeys() {
       const _settings = await System.keys();
-      setLLMChoice(_settings?.LLMProvider || "openai");
+      let llm = _settings?.LLMProvider || "deepseek";
+      if (
+        llm === "generic-openai" &&
+        _settings?.GenericOpenAiBasePath?.includes("deepseek")
+      ) {
+        llm = "deepseek";
+      }
+      setLLMChoice(llm);
       setVectorDb(_settings?.VectorDB || "lancedb");
       setEmbeddingEngine(_settings?.EmbeddingEngine || "openai");
 

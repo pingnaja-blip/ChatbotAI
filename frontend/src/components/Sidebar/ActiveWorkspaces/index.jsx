@@ -88,12 +88,12 @@ export default function ActiveWorkspaces() {
               key={workspace.id}
               className="flex gap-x-2 items-center justify-between"
             >
-              <a
-                href={isActive ? null : paths.workspace.chat(workspace.slug)}
+              <Link
+                to={paths.workspace.chat(workspace.slug)}
                 aria-current={isActive ? "page" : ""}
                 className={`
               transition-all duration-[200ms]
-                flex flex-grow w-[75%] gap-x-2 py-[6px] px-[12px] rounded-[4px] text-white justify-start items-center
+                flex flex-grow w-[75%] gap-x-2 py-[6px] px-[12px] rounded-[4px] text-theme-text justify-start items-center
                 hover:bg-workspace-item-selected-gradient hover:font-bold border-2 border-outline
                 ${
                   isActive
@@ -101,85 +101,80 @@ export default function ActiveWorkspaces() {
                     : ""
                 }`}
               >
-                <div className="flex flex-row justify-between w-full">
-                  <div className="flex items-center space-x-2">
-                    <SquaresFour
-                      weight={isActive ? "fill" : "regular"}
-                      className="flex-shrink-0"
-                      size={24}
-                    />
-                    <p
-                      className={`text-[14px] leading-loose whitespace-nowrap overflow-hidden ${
-                        isActive ? "text-white " : "text-zinc-200"
-                      }`}
-                    >
-                      {isActive || isHovered
-                        ? truncate(workspace.name, 15)
-                        : truncate(workspace.name, 20)}
-                    </p>
-                  </div>
-                  {(isActive || isHovered || gearHover[workspace.id]) &&
-                  user?.role !== "default" ? (
-                    <div className="flex items-center gap-x-[2px]">
-                      <div
-                        className={`flex hover:bg-[#646768] p-[2px] rounded-[4px] text-[#A7A8A9] hover:text-white ${
-                          uploadHover[workspace.id] ? "bg-[#646768]" : ""
-                        }`}
-                      >
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setSelectedWs(workspace);
-                            showModal();
-                          }}
-                          onMouseEnter={() =>
-                            handleUploadMouseEnter(workspace.id)
-                          }
-                          onMouseLeave={() =>
-                            handleUploadMouseLeave(workspace.id)
-                          }
-                          className="rounded-md flex items-center justify-center ml-auto"
-                        >
-                          <UploadSimple
-                            className="h-[20px] w-[20px]"
-                            weight="bold"
-                          />
-                        </button>
-                      </div>
-
-                      <Link
-                        type="button"
-                        to={
-                          isInWorkspaceSettings
-                            ? paths.workspace.chat(workspace.slug)
-                            : paths.workspace.settings.generalAppearance(
-                                workspace.slug
-                              )
-                        }
-                        onMouseEnter={() => handleGearMouseEnter(workspace.id)}
-                        onMouseLeave={() => handleGearMouseLeave(workspace.id)}
-                        className="rounded-md flex items-center justify-center text-[#A7A8A9] hover:text-white ml-auto"
-                        aria-label="General appearance settings"
-                      >
-                        <div className="flex hover:bg-[#646768] p-[2px] rounded-[4px]">
-                          <GearSix
-                            color={
-                              isInWorkspaceSettings && workspace.slug === slug
-                                ? "#46C8FF"
-                                : gearHover[workspace.id]
-                                ? "#FFFFFF"
-                                : "#A7A8A9"
-                            }
-                            weight="bold"
-                            className="h-[20px] w-[20px]"
-                          />
-                        </div>
-                      </Link>
-                    </div>
-                  ) : null}
+                <div className="flex items-center space-x-2 min-w-0 flex-1">
+                  <SquaresFour
+                    weight={isActive ? "fill" : "regular"}
+                    className="flex-shrink-0"
+                    size={24}
+                  />
+                  <p
+                    className={`text-[14px] leading-loose whitespace-nowrap overflow-hidden ${
+                      isActive ? "text-theme-text font-semibold" : "text-theme-text"
+                    }`}
+                  >
+                    {isActive || isHovered
+                      ? truncate(workspace.name, 15)
+                      : truncate(workspace.name, 20)}
+                  </p>
                 </div>
-              </a>
+              </Link>
+              {(isActive || isHovered || gearHover[workspace.id]) &&
+              user?.role !== "default" ? (
+                <div className="flex items-center gap-x-[2px] shrink-0">
+                  <div
+                    className={`flex hover:bg-slate-200 p-[2px] rounded-[4px] text-theme-text-muted hover:text-theme-text ${
+                      uploadHover[workspace.id] ? "bg-slate-200" : ""
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedWs(workspace);
+                        showModal();
+                      }}
+                      onMouseEnter={() =>
+                        handleUploadMouseEnter(workspace.id)
+                      }
+                      onMouseLeave={() =>
+                        handleUploadMouseLeave(workspace.id)
+                      }
+                      className="rounded-md flex items-center justify-center"
+                      aria-label="Upload documents"
+                    >
+                      <UploadSimple
+                        className="h-[20px] w-[20px]"
+                        weight="bold"
+                      />
+                    </button>
+                  </div>
+
+                  <Link
+                    to={
+                      isInWorkspaceSettings
+                        ? paths.workspace.chat(workspace.slug)
+                        : paths.workspace.settings.generalAppearance(
+                            workspace.slug
+                          )
+                    }
+                    onMouseEnter={() => handleGearMouseEnter(workspace.id)}
+                    onMouseLeave={() => handleGearMouseLeave(workspace.id)}
+                    className="rounded-md flex items-center justify-center text-theme-text-muted hover:text-theme-text p-[2px] hover:bg-slate-200"
+                    aria-label="General appearance settings"
+                  >
+                    <GearSix
+                      color={
+                        isInWorkspaceSettings && workspace.slug === slug
+                          ? "#4f46e5"
+                          : gearHover[workspace.id]
+                          ? "#1f2937"
+                          : "#6b7280"
+                      }
+                      weight="bold"
+                      className="h-[20px] w-[20px]"
+                    />
+                  </Link>
+                </div>
+              ) : null}
             </div>
             {isActive && (
               <ThreadContainer workspace={workspace} isActive={isActive} />

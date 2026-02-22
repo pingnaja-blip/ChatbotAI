@@ -54,17 +54,17 @@ export default function WebsiteDepthOptions() {
             <div className="w-full flex flex-col gap-4">
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-slate-800 text-sm font-bold">
                     Website URL
                   </label>
-                  <p className="text-xs font-normal text-white/50">
+                  <p className="text-xs font-normal text-slate-600">
                     URL of the website you want to scrape.
                   </p>
                 </div>
                 <input
                   type="url"
                   name="url"
-                  className="border-none bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
+                  className="border border-slate-300 bg-slate-100 text-slate-800 placeholder:text-slate-500 text-sm rounded-lg focus:border-slate-500 block w-full p-2.5"
                   placeholder="https://example.com"
                   required={true}
                   autoComplete="off"
@@ -73,8 +73,8 @@ export default function WebsiteDepthOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">Depth</label>
-                  <p className="text-xs font-normal text-white/50">
+                  <label className="text-slate-800 text-sm font-bold">Depth</label>
+                  <p className="text-xs font-normal text-slate-600">
                     This is the number of child-links that the worker should
                     follow from the origin URL.
                   </p>
@@ -84,17 +84,17 @@ export default function WebsiteDepthOptions() {
                   name="depth"
                   min="1"
                   max="5"
-                  className="border-none bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
+                  className="border border-slate-300 bg-slate-100 text-slate-800 placeholder:text-slate-500 text-sm rounded-lg focus:border-slate-500 block w-full p-2.5"
                   required={true}
                   defaultValue="1"
                 />
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-slate-800 text-sm font-bold">
                     Max Links
                   </label>
-                  <p className="text-xs font-normal text-white/50">
+                  <p className="text-xs font-normal text-slate-600">
                     Maximum number of links to scrape.
                   </p>
                 </div>
@@ -102,7 +102,7 @@ export default function WebsiteDepthOptions() {
                   type="number"
                   name="maxLinks"
                   min="1"
-                  className="border-none bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
+                  className="border border-slate-300 bg-slate-100 text-slate-800 placeholder:text-slate-500 text-sm rounded-lg focus:border-slate-500 block w-full p-2.5"
                   required={true}
                   defaultValue="20"
                 />
@@ -121,7 +121,7 @@ export default function WebsiteDepthOptions() {
               {loading ? "Scraping website..." : "Submit"}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-slate-600">
                 Once complete, all scraped pages will be available for embedding
                 into workspaces in the document picker.
               </p>

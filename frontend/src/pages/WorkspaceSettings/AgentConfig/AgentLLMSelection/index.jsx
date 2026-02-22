@@ -91,9 +91,9 @@ export default function AgentLLMSelection({
 
   const selectedLLMObject = LLMS.find((llm) => llm.value === selectedLLM);
   return (
-    <div className="border-b border-white/40 pb-8">
+    <div className="border-b border-outline pb-8">
       {WARN_PERFORMANCE.includes(selectedLLM) && (
-        <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-white mb-4 bg-blue-800/30 w-fit rounded-lg px-4 py-2">
+        <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-theme-text mb-4 bg-blue-100 w-fit rounded-lg px-4 py-2">
           <div className="gap-x-2 flex items-center">
             <Gauge className="shrink-0" size={25} />
             <p className="text-sm">
@@ -109,7 +109,7 @@ export default function AgentLLMSelection({
         <label htmlFor="name" className="block input-label">
           Workspace Agent LLM Provider
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           The specific LLM provider & model that will be used for this
           workspace's @agent agent.
         </p>
@@ -124,20 +124,20 @@ export default function AgentLLMSelection({
           />
         )}
         {searchMenuOpen ? (
-          <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] overflow-auto white-scrollbar min-h-[64px] bg-[#18181B] rounded-lg flex flex-col justify-between cursor-pointer border-2 border-[#46C8FF] z-20">
+          <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] overflow-auto white-scrollbar min-h-[64px] bg-dropdown-bg rounded-lg flex flex-col justify-between cursor-pointer border-2 border-outline z-20">
             <div className="w-full flex flex-col gap-y-1">
-              <div className="flex items-center sticky top-0 border-b border-[#9CA3AF] mx-4 bg-[#18181B]">
+              <div className="flex items-center sticky top-0 border-b border-outline mx-4 bg-dropdown-bg">
                 <MagnifyingGlass
                   size={20}
                   weight="bold"
-                  className="absolute left-4 z-30 text-white -ml-4 my-2"
+                  className="absolute left-4 z-30 text-theme-text-muted -ml-4 my-2"
                 />
                 <input
                   type="text"
                   name="llm-search"
                   autoComplete="off"
                   placeholder="Search available LLM providers"
-                  className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none focus:border-white text-white placeholder:text-white placeholder:font-medium"
+                  className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none focus:border-outline text-theme-text placeholder:text-theme-text-muted placeholder:font-medium"
                   onChange={(e) => setSearchQuery(e.target.value)}
                   ref={searchInputRef}
                   onKeyDown={(e) => {
@@ -147,7 +147,7 @@ export default function AgentLLMSelection({
                 <X
                   size={20}
                   weight="bold"
-                  className="cursor-pointer text-white hover:text-[#9CA3AF]"
+                  className="cursor-pointer text-theme-text-muted hover:text-theme-text"
                   onClick={handleXButton}
                 />
               </div>
@@ -169,7 +169,7 @@ export default function AgentLLMSelection({
           </div>
         ) : (
           <button
-            className="w-full max-w-[640px] h-[64px] bg-[#18181B] rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-[#46C8FF] transition-all duration-300"
+            className="w-full max-w-[640px] h-[64px] bg-dropdown-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-outline hover:border-[#46C8FF] transition-all duration-300"
             type="button"
             onClick={() => setSearchMenuOpen(true)}
           >
@@ -180,15 +180,15 @@ export default function AgentLLMSelection({
                 className="w-10 h-10 rounded-md"
               />
               <div className="flex flex-col text-left">
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-theme-text">
                   {selectedLLMObject.name}
                 </div>
-                <div className="mt-1 text-xs text-[#D2D5DB]">
+                <div className="mt-1 text-xs text-theme-text-muted">
                   {selectedLLMObject.description}
                 </div>
               </div>
             </div>
-            <CaretUpDown size={24} weight="bold" className="text-white" />
+            <CaretUpDown size={24} weight="bold" className="text-theme-text" />
           </button>
         )}
       </div>

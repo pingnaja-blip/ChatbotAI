@@ -32,7 +32,7 @@ function workspaceThreadEndpoints(app) {
           "workspace_thread_created",
           {
             multiUserMode: multiUserMode(response),
-            LLMSelection: process.env.LLM_PROVIDER || "openai",
+            LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
             Embedder: process.env.EMBEDDING_ENGINE || "inherit",
             VectorDbSelection: process.env.VECTOR_DB || "lancedb",
           },

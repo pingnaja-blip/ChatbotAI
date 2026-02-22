@@ -1,11 +1,28 @@
-process.env.NODE_ENV === "development"
-  ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
-  : require("dotenv").config();
+const path = require("path");
+const envPath =
+  process.env.NODE_ENV === "development"
+    ? path.join(__dirname, `.env.${process.env.NODE_ENV}`)
+    : path.join(__dirname, ".env");
+require("dotenv").config({ path: envPath });
+
+// Fail fast if sharp (used by @xenova/transformers for native embeddings) is broken
+try {
+  require("sharp");
+} catch (err) {
+  if (err.code === "MODULE_NOT_FOUND" || /sharp.*\.node/.test(err.message)) {
+    console.error(
+      "\n[FATAL] The 'sharp' module could not be loaded. Document embedding will fail.\n" +
+        "Fix: In the server folder run:  npm rebuild sharp\n" +
+        "Then restart the server.\n"
+    );
+    process.exit(1);
+  }
+  throw err;
+}
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path");
 const { reqBody } = require("./utils/http");
 const { systemEndpoints } = require("./endpoints/system");
 const { workspaceEndpoints } = require("./endpoints/workspaces");
@@ -80,6 +97,17 @@ if (process.env.NODE_ENV !== "development") {
     response.send("User-agent: *\nDisallow: /").end();
   });
 } else {
+  // In development the frontend is served by Vite (default port 3000).
+  // Redirect browser requests to the app so the landing page is reachable.
+  const frontendDevUrl =
+    process.env.FRONTEND_DEV_URL || "http://localhost:3000";
+  app.get("*", function (request, response, next) {
+    if (request.path.startsWith("/api")) return next();
+    const url = new URL(request.path || "/", frontendDevUrl);
+    url.search = request.url.includes("?") ? request.url.slice(request.url.indexOf("?")) : "";
+    response.redirect(302, url.toString());
+  });
+
   // Debug route for development connections to vectorDBs
   apiRouter.post("/v/:command", async (request, response) => {
     try {

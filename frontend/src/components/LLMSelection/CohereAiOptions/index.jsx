@@ -11,7 +11,7 @@ export default function CohereAiOptions({ settings }) {
             name="CohereApiKey"
             className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
             placeholder="Cohere API Key"
-            defaultValue={settings?.CohereApiKey ? "*".repeat(20) : ""}
+            defaultValue={settings?.CohereApiKey ?? ""}
             required={true}
             autoComplete="off"
             spellCheck={false}

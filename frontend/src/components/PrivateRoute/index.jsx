@@ -17,63 +17,84 @@ function useIsAuthenticated() {
   const [multiUserMode, setMultiUserMode] = useState(false);
 
   useEffect(() => {
+    const AUTH_CHECK_TIMEOUT_MS = 15_000;
+
     const validateSession = async () => {
-      const {
-        MultiUserMode,
-        RequiresAuth,
-        LLMProvider = null,
-        VectorDB = null,
-      } = await System.keys();
+      let timedOut = false;
+      const timeoutId = setTimeout(() => {
+        timedOut = true;
+        setIsAuthed(false);
+        window.sessionStorage.setItem("anythingllm_connection_error", "1");
+      }, AUTH_CHECK_TIMEOUT_MS);
 
-      setMultiUserMode(MultiUserMode);
+      try {
+        const results = await System.keys();
+        if (timedOut) return;
+        clearTimeout(timeoutId);
 
-      // Check for the onboarding redirect condition
-      if (
-        !MultiUserMode &&
-        !RequiresAuth && // Not in Multi-user AND no password set.
-        !LLMProvider &&
-        !VectorDB
-      ) {
-        setShouldRedirectToOnboarding(true);
-        setIsAuthed(true);
-        return;
-      }
+        const {
+          MultiUserMode,
+          RequiresAuth,
+          LLMProvider = null,
+          VectorDB = null,
+        } = results || {};
 
-      if (!MultiUserMode && !RequiresAuth) {
-        setIsAuthed(true);
-        return;
-      }
+        setMultiUserMode(MultiUserMode);
 
-      // Single User password mode check
-      if (!MultiUserMode && RequiresAuth) {
+        // Check for the onboarding redirect condition
+        if (
+          !MultiUserMode &&
+          !RequiresAuth && // Not in Multi-user AND no password set.
+          !LLMProvider &&
+          !VectorDB
+        ) {
+          setShouldRedirectToOnboarding(true);
+          setIsAuthed(true);
+          return;
+        }
+
+        if (!MultiUserMode && !RequiresAuth) {
+          setIsAuthed(true);
+          return;
+        }
+
+        // Single User password mode check
+        if (!MultiUserMode && RequiresAuth) {
+          const localAuthToken = localStorage.getItem(AUTH_TOKEN);
+          if (!localAuthToken) {
+            setIsAuthed(false);
+            return;
+          }
+
+          const isValid = await validateSessionTokenForUser();
+          setIsAuthed(isValid);
+          return;
+        }
+
+        const localUser = localStorage.getItem(AUTH_USER);
         const localAuthToken = localStorage.getItem(AUTH_TOKEN);
-        if (!localAuthToken) {
+        if (!localUser || !localAuthToken) {
           setIsAuthed(false);
           return;
         }
 
         const isValid = await validateSessionTokenForUser();
-        setIsAuthed(isValid);
-        return;
-      }
+        if (!isValid) {
+          localStorage.removeItem(AUTH_USER);
+          localStorage.removeItem(AUTH_TOKEN);
+          localStorage.removeItem(AUTH_TIMESTAMP);
+          setIsAuthed(false);
+          return;
+        }
 
-      const localUser = localStorage.getItem(AUTH_USER);
-      const localAuthToken = localStorage.getItem(AUTH_TOKEN);
-      if (!localUser || !localAuthToken) {
-        setIsAuthed(false);
-        return;
+        setIsAuthed(true);
+      } catch (_) {
+        if (!timedOut) {
+          clearTimeout(timeoutId);
+          setIsAuthed(false);
+          window.sessionStorage.setItem("anythingllm_connection_error", "1");
+        }
       }
-
-      const isValid = await validateSessionTokenForUser();
-      if (!isValid) {
-        localStorage.removeItem(AUTH_USER);
-        localStorage.removeItem(AUTH_TOKEN);
-        localStorage.removeItem(AUTH_TIMESTAMP);
-        setIsAuthed(false);
-        return;
-      }
-
-      setIsAuthed(true);
     };
     validateSession();
   }, []);

@@ -1,6 +1,9 @@
-process.env.NODE_ENV === "development"
-  ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
-  : require("dotenv").config();
+const path = require("path");
+const envPath =
+  process.env.NODE_ENV === "development"
+    ? path.join(__dirname, "../.env.development")
+    : path.join(__dirname, "../.env");
+require("dotenv").config({ path: envPath });
 const { viewLocalFiles, normalizePath, isWithin } = require("../utils/files");
 const { purgeDocument, purgeFolder } = require("../utils/files/purgeDocument");
 const { getVectorDbClass } = require("../utils/helpers");
@@ -18,7 +21,6 @@ const { SystemSettings } = require("../models/systemSettings");
 const { User } = require("../models/user");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const fs = require("fs");
-const path = require("path");
 const {
   getDefaultFilename,
   determineLogoFilepath,
@@ -51,6 +53,10 @@ const {
   generateRecoveryCodes,
 } = require("../utils/PasswordRecovery");
 const { SlashCommandPresets } = require("../models/slashCommandsPresets");
+const {
+  validateDeepSeekKey,
+  validateQwenDashScopeKey,
+} = require("../utils/validateAiApiKey");
 
 function systemEndpoints(app) {
   if (!app) return;
@@ -105,12 +111,31 @@ function systemEndpoints(app) {
   );
 
   app.post("/request-token", async (request, response) => {
+    const sendLoginError = (status, message) => {
+      response.status(status).json({
+        valid: false,
+        token: null,
+        user: null,
+        message,
+      });
+    };
+
     try {
-      const bcrypt = require("bcrypt");
+      const bcrypt = require("bcryptjs");
+
+      if (!process.env.JWT_SECRET) {
+        console.error("request-token: JWT_SECRET is not set.");
+        return sendLoginError(
+          503,
+          "Server misconfiguration: JWT_SECRET is not set. Please set it in the server .env file."
+        );
+      }
 
       if (await SystemSettings.isMultiUserMode()) {
-        const { username, password } = reqBody(request);
-        const existingUser = await User._get({ username: String(username) });
+        const body = reqBody(request);
+        const username = body?.username != null ? String(body.username) : "";
+        const password = body?.password != null ? String(body.password) : "";
+        const existingUser = await User._get({ username });
 
         if (!existingUser) {
           await EventLogs.logEvent(
@@ -130,7 +155,8 @@ function systemEndpoints(app) {
           return;
         }
 
-        if (!bcrypt.compareSync(String(password), existingUser.password)) {
+        const storedHash = existingUser.password;
+        if (!storedHash || !bcrypt.compareSync(password, storedHash)) {
           await EventLogs.logEvent(
             "failed_login_invalid_password",
             {
@@ -210,13 +236,17 @@ function systemEndpoints(app) {
         });
         return;
       } else {
-        const { password } = reqBody(request);
-        if (
-          !bcrypt.compareSync(
-            password,
-            bcrypt.hashSync(process.env.AUTH_TOKEN, 10)
-          )
-        ) {
+        const body = reqBody(request);
+        const password = body?.password != null ? String(body.password) : "";
+        const authToken = process.env.AUTH_TOKEN;
+        if (!authToken) {
+          console.error("request-token: AUTH_TOKEN is not set (single-user mode).");
+          return sendLoginError(
+            503,
+            "Server misconfiguration: AUTH_TOKEN is not set. Please set it in the server .env file."
+          );
+        }
+        if (!bcrypt.compareSync(password, bcrypt.hashSync(authToken, 10))) {
           await EventLogs.logEvent("failed_login_invalid_password", {
             ip: request.ip || "Unknown IP",
             multiUserMode: false,
@@ -241,8 +271,15 @@ function systemEndpoints(app) {
         });
       }
     } catch (e) {
-      console.log(e.message, e);
-      response.sendStatus(500).end();
+      console.error("request-token error:", e.message, e);
+      if (!response.headersSent) {
+        sendLoginError(
+          500,
+          process.env.NODE_ENV === "development"
+            ? e.message
+            : "Login failed due to a server error. Please try again."
+        );
+      }
     }
   });
 
@@ -938,6 +975,103 @@ function systemEndpoints(app) {
       } catch (error) {
         console.error(error);
         response.status(500).end();
+      }
+    }
+  );
+
+  /**
+   * Validate the server's current DeepSeek key (from env).
+   * Only applies when LLM_PROVIDER is generic-openai and base path is DeepSeek.
+   */
+  app.get(
+    "/system/validate-llm-key",
+    [validatedRequest],
+    async (_request, response) => {
+      try {
+        const provider = process.env.LLM_PROVIDER || "";
+        const basePath = (process.env.GENERIC_OPEN_AI_BASE_PATH || "").toLowerCase();
+        const apiKey = process.env.GENERIC_OPEN_AI_API_KEY;
+        if (provider !== "generic-openai" || !basePath.includes("deepseek")) {
+          return response.status(200).json({
+            valid: false,
+            error: "Current LLM is not DeepSeek. Set LLM base URL to https://api.deepseek.com to validate.",
+          });
+        }
+        if (!apiKey || !apiKey.trim()) {
+          return response.status(200).json({
+            valid: false,
+            error: "GENERIC_OPEN_AI_API_KEY is not set.",
+          });
+        }
+        const result = await validateDeepSeekKey(apiKey);
+        return response.status(200).json(result);
+      } catch (error) {
+        console.error("validate-llm-key error:", error?.message, error);
+        return response.status(500).json({
+          valid: false,
+          error: error?.message || "Validation request failed.",
+        });
+      }
+    }
+  );
+
+  /**
+   * Validate DeepSeek or Qwen (DashScope) API key with a real API call.
+   * Body: { provider: 'deepseek' | 'qwen', apiKey: string, basePath?: string }
+   * Returns: { valid: boolean, error?: string }
+   */
+  app.post(
+    "/system/validate-ai-api-key",
+    [validatedRequest],
+    async (request, response) => {
+      try {
+        const { provider, apiKey, basePath } = reqBody(request);
+        if (!provider || !apiKey) {
+          return response.status(400).json({
+            valid: false,
+            error: "provider and apiKey are required.",
+          });
+        }
+        const normalized = String(provider).toLowerCase();
+        let result;
+        if (normalized === "deepseek") {
+          result = await validateDeepSeekKey(apiKey);
+        } else if (normalized === "qwen" || normalized === "dashscope") {
+          result = await validateQwenDashScopeKey(apiKey, basePath || undefined);
+        } else {
+          return response.status(400).json({
+            valid: false,
+            error: "provider must be 'deepseek' or 'qwen'.",
+          });
+        }
+        return response.status(200).json(result);
+      } catch (error) {
+        console.error("validate-ai-api-key error:", error?.message, error);
+        return response.status(500).json({
+          valid: false,
+          error: error?.message || "Validation request failed.",
+        });
+      }
+    }
+  );
+
+  /**
+   * Validate the collector's Qwen (DashScope) API key (from collector .env).
+   * Server asks the collector to run a real API check. Collector must be running.
+   */
+  app.get(
+    "/system/validate-collector-qwen-key",
+    [validatedRequest],
+    async (_request, response) => {
+      try {
+        const result = await new CollectorApi().validateCollectorQwenKey();
+        return response.status(200).json(result);
+      } catch (error) {
+        console.error("validate-collector-qwen-key error:", error?.message, error);
+        return response.status(500).json({
+          valid: false,
+          error: error?.message || "Validation request failed.",
+        });
       }
     }
   );

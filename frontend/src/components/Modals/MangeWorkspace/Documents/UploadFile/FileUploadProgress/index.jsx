@@ -50,8 +50,10 @@ function FileUploadProgressComponent({
       if (!response.ok) {
         setStatus("failed");
         clearInterval(timer);
-        onUploadError(data.error);
-        setError(data.error);
+        setLoading(false);
+        setLoadingMessage("");
+        onUploadError(data?.error || response.statusText || "Upload failed");
+        setError(data?.error || response.statusText || "Upload failed");
       } else {
         setLoading(false);
         setLoadingMessage("");
@@ -73,16 +75,16 @@ function FileUploadProgressComponent({
       <div
         className={`${
           isFadingOut ? "file-upload-fadeout" : "file-upload"
-        } h-14 px-2 py-2 flex items-center gap-x-4 rounded-lg bg-white/5 border border-white/40`}
+        } h-14 px-2 py-2 flex items-center gap-x-4 rounded-lg bg-slate-100 border border-slate-300`}
       >
         <div className="w-6 h-6 flex-shrink-0">
           <XCircle className="w-6 h-6 stroke-white bg-red-500 rounded-full p-1 w-full h-full" />
         </div>
         <div className="flex flex-col">
-          <p className="text-white text-xs font-medium">
+          <p className="text-slate-800 text-xs font-medium">
             {truncate(file.name, 30)}
           </p>
-          <p className="text-red-400 text-xs font-medium">{reason}</p>
+          <p className="text-red-600 text-xs font-medium">{reason}</p>
         </div>
       </div>
     );
@@ -93,16 +95,16 @@ function FileUploadProgressComponent({
       <div
         className={`${
           isFadingOut ? "file-upload-fadeout" : "file-upload"
-        } h-14 px-2 py-2 flex items-center gap-x-4 rounded-lg bg-white/5 border border-white/40 overflow-y-auto`}
+        } h-14 px-2 py-2 flex items-center gap-x-4 rounded-lg bg-slate-100 border border-slate-300 overflow-y-auto`}
       >
         <div className="w-6 h-6 flex-shrink-0">
           <XCircle className="w-6 h-6 stroke-white bg-red-500 rounded-full p-1 w-full h-full" />
         </div>
         <div className="flex flex-col">
-          <p className="text-white text-xs font-medium">
+          <p className="text-slate-800 text-xs font-medium">
             {truncate(file.name, 30)}
           </p>
-          <p className="text-red-400 text-xs font-medium">{error}</p>
+          <p className="text-red-600 text-xs font-medium">{error}</p>
         </div>
       </div>
     );
@@ -112,7 +114,7 @@ function FileUploadProgressComponent({
     <div
       className={`${
         isFadingOut ? "file-upload-fadeout" : "file-upload"
-      } h-14 px-2 py-2 flex items-center gap-x-4 rounded-lg bg-white/5 border border-white/40`}
+      } h-14 px-2 py-2 flex items-center gap-x-4 rounded-lg bg-slate-100 border border-slate-300`}
     >
       <div className="w-6 h-6 flex-shrink-0">
         {status !== "complete" ? (
@@ -124,11 +126,13 @@ function FileUploadProgressComponent({
         )}
       </div>
       <div className="flex flex-col">
-        <p className="text-white text-xs font-medium">
+        <p className="text-slate-800 text-xs font-medium">
           {truncate(file.name, 30)}
         </p>
-        <p className="text-white/60 text-xs font-medium">
-          {humanFileSize(file.size)} | {milliToHms(timerMs)}
+        <p className="text-slate-600 text-xs font-medium">
+          {status === "complete"
+            ? "Upload complete — in workspace"
+            : `${humanFileSize(file.size)} | ${milliToHms(timerMs)}`}
         </p>
       </div>
     </div>

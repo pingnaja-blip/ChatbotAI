@@ -92,10 +92,10 @@ export default function SuggestedChatMessages({ slug }) {
     return (
       <div className="flex flex-col">
         <label className="block input-label">Suggested Chat Messages</label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           Customize the messages that will be suggested to your workspace users.
         </p>
-        <p className="text-white text-opacity-60 text-sm font-medium mt-6">
+        <p className="text-theme-text-muted text-sm font-medium mt-6">
           <PreLoader size="4" />
         </p>
       </div>
@@ -104,12 +104,12 @@ export default function SuggestedChatMessages({ slug }) {
     <div className="w-screen mt-6">
       <div className="flex flex-col">
         <label className="block input-label">Suggested Chat Messages</label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           Customize the messages that will be suggested to your workspace users.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white/60 text-xs mt-2 w-full justify-center max-w-[600px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-theme-text-muted text-xs mt-2 w-full justify-center max-w-[600px]">
         {suggestedMessages.map((suggestion, index) => (
           <div key={index} className="relative w-full">
             <button
@@ -138,24 +138,24 @@ export default function SuggestedChatMessages({ slug }) {
       {editingIndex >= 0 && (
         <div className="flex flex-col gap-y-4 mr-2 mt-8">
           <div className="w-1/2">
-            <label className="text-white text-sm font-semibold block mb-2">
+            <label className="text-theme-text text-sm font-semibold block mb-2">
               Heading
             </label>
             <input
               placeholder="Message heading"
-              className=" bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full"
+              className=" theme-input text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full"
               value={newMessage.heading}
               name="heading"
               onChange={onEditChange}
             />
           </div>
           <div className="w-1/2">
-            <label className="text-white text-sm font-semibold block mb-2">
+            <label className="text-theme-text text-sm font-semibold block mb-2">
               Message
             </label>
             <input
               placeholder="Message"
-              className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full"
+              className="theme-input text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-full"
               value={newMessage.message}
               name="message"
               onChange={onEditChange}
@@ -167,7 +167,7 @@ export default function SuggestedChatMessages({ slug }) {
         <button
           type="button"
           onClick={addMessage}
-          className="flex gap-x-2 items-center justify-center mt-6 text-white text-sm hover:text-sky-400 transition-all duration-300"
+          className="flex gap-x-2 items-center justify-center mt-6 text-theme-text text-sm hover:text-accent transition-all duration-300"
         >
           Add new message <Plus className="" size={24} weight="fill" />
         </button>
@@ -177,7 +177,7 @@ export default function SuggestedChatMessages({ slug }) {
         <div className="flex justify-start py-6">
           <button
             type="button"
-            className="transition-all duration-300 border border-slate-200 px-4 py-2 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+            className="transition-all duration-300 border border-slate-200 px-4 py-2 rounded-lg text-theme-text text-sm items-center flex gap-x-2 hover:bg-sidebar-button hover:text-theme-text focus:ring-gray-800"
             onClick={handleSaveSuggestedMessages}
           >
             Save Messages

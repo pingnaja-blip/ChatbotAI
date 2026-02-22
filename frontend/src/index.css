@@ -19,8 +19,8 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
-  background-color: #E8F5E9;
-  color: #1B5E20;
+  background-color: #f5f5f5;
+  color: #1f2937;
 }
 
 a {
@@ -339,14 +339,14 @@ dialog::backdrop {
 .login-input-gradient {
   background: linear-gradient(
     180deg,
-    rgba(232, 245, 233, 0.9) 0%,
-    rgba(200, 230, 201, 0.9) 100%
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(249, 250, 251, 0.95) 100%
   ) !important;
-  box-shadow: 0px 4px 30px rgba(27, 94, 32, 0.15);
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
 }
 
 .white-fill {
-  fill: white;
+  fill: #1f2937;
 }
 
 .tip:before {
@@ -357,7 +357,7 @@ dialog::backdrop {
   position: absolute;
 
   border-bottom: 8px solid transparent;
-  border-top: 8px solid rgba(255, 255, 255, 0.5);
+  border-top: 8px solid rgba(31, 41, 55, 0.9);
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-radius: 0px 0px 0px 5px;
@@ -367,13 +367,13 @@ dialog::backdrop {
 }
 
 .user-reply > div:first-of-type {
-  border: 2px solid white;
+  border: 2px solid #e5e7eb;
 }
 
 .reply > *:last-child::after {
   content: "|";
   animation: blink 1.5s steps(1) infinite;
-  color: #1B5E20;
+  color: #1f2937;
   font-size: 14px;
 }
 
@@ -405,7 +405,7 @@ dialog::backdrop {
 }
 
 .tooltip {
-  @apply !bg-black !text-white !py-2 !px-3 !rounded-md;
+  @apply !bg-gray-800 !text-white !py-2 !px-3 !rounded-md;
 }
 
 .Toastify__toast-body {
@@ -494,7 +494,7 @@ dialog::backdrop {
 .markdown table {
   width: 100%;
   border-collapse: collapse;
-  color: #2E7D32;
+  color: #374151;
   font-size: 13px;
   margin: 30px 0px;
   border-radius: 10px;
@@ -503,7 +503,7 @@ dialog::backdrop {
 }
 
 .markdown table thead {
-  color: #1B5E20;
+  color: #1f2937;
   text-transform: uppercase;
   font-weight: bolder;
 }
@@ -616,23 +616,23 @@ dialog::backdrop {
 
 .markdown strong {
   font-weight: 600;
-  color: #1B5E20;
+  color: #1f2937;
 }
 
 .file-row:nth-child(even) {
-  @apply bg-[#1C1E21];
+  @apply bg-gray-50;
 }
 
 .file-row:nth-child(odd) {
-  @apply bg-[#2C2C2C];
+  @apply bg-white;
 }
 
 .file-row.selected:nth-child(even) {
-  @apply bg-sky-500/20;
+  @apply bg-indigo-50;
 }
 
 .file-row.selected:nth-child(odd) {
-  @apply bg-sky-500/10;
+  @apply bg-indigo-50;
 }
 
 /* Flex upload modal to be a column when on small screens so that the UI
@@ -659,34 +659,34 @@ does not extend the close button beyond the viewport. */
 .white-scrollbar {
   overflow-y: scroll;
   scrollbar-width: thin;
-  scrollbar-color: #66BB6A #C8E6C9;
+  scrollbar-color: #9ca3af #e5e7eb;
   margin-right: 8px;
 }
 
 /* Webkit browsers (Chrome, Safari) */
 .white-scrollbar::-webkit-scrollbar {
   width: 3px;
-  background-color: #C8E6C9;
+  background-color: #e5e7eb;
 }
 
 .white-scrollbar::-webkit-scrollbar-track {
-  background-color: #C8E6C9;
+  background-color: #e5e7eb;
   margin-right: 8px;
 }
 
 .white-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #66BB6A;
+  background-color: #9ca3af;
   border-radius: 4px;
-  border: 2px solid #C8E6C9;
+  border: 2px solid #e5e7eb;
 }
 
 .white-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #4CAF50;
+  background-color: #6b7280;
 }
 
 /* Recharts rendering styles */
 .recharts-text > * {
-  fill: #fff;
+  fill: #1f2937;
 }
 
 .recharts-legend-wrapper {

@@ -16,7 +16,7 @@ export default function MistralOptions({ settings }) {
           name="MistralApiKey"
           className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
           placeholder="Mistral API Key"
-          defaultValue={settings?.MistralApiKey ? "*".repeat(20) : ""}
+          defaultValue={settings?.MistralApiKey ?? ""}
           required={true}
           autoComplete="off"
           spellCheck={false}

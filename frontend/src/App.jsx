@@ -5,6 +5,7 @@ import PrivateRoute, {
   AdminRoute,
   ManagerRoute,
 } from "@/components/PrivateRoute";
+import { FullScreenLoader } from "@/components/Preloader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "@/pages/Login";
@@ -56,7 +57,7 @@ const PrivacyAndData = lazy(
 
 export default function App() {
   return (
-    <Suspense fallback={<div />}>
+    <Suspense fallback={<FullScreenLoader />}>
       <ContextWrapper>
         <LogoProvider>
           <PfpProvider>

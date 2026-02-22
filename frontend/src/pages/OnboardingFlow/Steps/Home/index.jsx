@@ -2,7 +2,7 @@ import { projectIdentity } from "@/config/projectIdentity";
 import paths from "@/utils/paths";
 import LGroupImg from "./l_group.png";
 import RGroupImg from "./r_group.png";
-import AnythingLLMLogo from "@/media/logo/anything-llm.png";
+import KBTGLogo from "@/media/logo/kbtg-regional-team-cropped.png";
 import { useNavigate } from "react-router-dom";
 
 export default function OnboardingHome() {
@@ -24,12 +24,13 @@ export default function OnboardingHome() {
           <div className="flex flex-col justify-center items-center">
             <p className="text-theme-text-muted font-thin text-[24px]">Welcome to</p>
             <img
-              src={AnythingLLMLogo}
+              src={KBTGLogo}
               alt={projectIdentity.name}
-              className="md:h-[50px] flex-shrink-0 max-w-[300px]"
+              className="md:max-h-[80px] flex-shrink-0 max-w-[320px] w-auto"
+              style={{ objectFit: "contain" }}
             />
             <button
-              onClick={() => navigate(paths.onboarding.llmPreference())}
+              onClick={() => navigate(paths.onboarding.userSetup())}
               className="animate-pulse w-full md:max-w-[350px] md:min-w-[300px] text-center py-3 bg-white text-theme-text font-semibold text-sm my-10 rounded-xl hover:bg-accent/30 shadow-lg border-2 border-outline"
             >
               Get started

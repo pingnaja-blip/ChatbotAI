@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 import System from "../../../models/system";
 import { AUTH_TOKEN } from "../../../utils/constants";
 import { projectIdentity } from "@/config/projectIdentity";
@@ -14,6 +15,7 @@ export default function SingleUserAuth() {
   const [downloadComplete, setDownloadComplete] = useState(false);
   const [token, setToken] = useState(null);
   const [customAppName, setCustomAppName] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     isOpen: isRecoveryCodeModalOpen,
@@ -73,29 +75,41 @@ export default function SingleUserAuth() {
           <div className="flex items-start justify-between pt-11 pb-9 rounded-t">
             <div className="flex items-center flex-col gap-y-4">
               <div className="flex gap-x-1">
-                <h3 className="text-md md:text-2xl font-bold text-white text-center white-space-nowrap hidden md:block">
+                <h3 className="text-md md:text-2xl font-bold text-theme-text text-center white-space-nowrap hidden md:block">
                   Welcome to
                 </h3>
                 <p className="text-4xl md:text-2xl font-bold bg-gradient-to-r from-[#75D6FF] via-[#FFFFFF] to-[#FFFFFF] bg-clip-text text-transparent">
                   {customAppName || projectIdentity.defaultAppName}
                 </p>
               </div>
-              <p className="text-sm text-white/90 text-center">
+              <p className="text-sm text-theme-text-muted text-center">
                 Sign in to your {customAppName || projectIdentity.defaultAppName} instance.
               </p>
             </div>
           </div>
           <div className="w-full px-4 md:px-12">
             <div className="w-full flex flex-col gap-y-4">
-              <div className="w-screen md:w-full md:px-0 px-6">
+              <div className="w-screen md:w-full md:px-0 px-6 relative">
                 <input
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
+                  className="theme-input w-full h-[48px] md:w-[300px] md:h-[34px] pr-10"
                   required={true}
                   autoComplete="off"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded text-theme-text-muted hover:text-theme-text focus:outline-none focus:ring-2 focus:ring-[#46C8FF] focus:ring-offset-0"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeSlash className="h-5 w-5" weight="bold" />
+                  ) : (
+                    <Eye className="h-5 w-5" weight="bold" />
+                  )}
+                </button>
               </div>
 
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}

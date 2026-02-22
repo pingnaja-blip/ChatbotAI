@@ -105,7 +105,7 @@ export default function WorkspaceAgentConfiguration({ workspace }) {
           <button
             type="submit"
             form="agent-settings-form"
-            className="w-fit transition-all duration-300 border border-slate-200 px-5 py-2.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+            className="w-fit transition-all duration-300 border border-slate-200 px-5 py-2.5 rounded-lg text-theme-text text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
           >
             {saving ? "Updating agent..." : "Update workspace agent"}
           </button>
@@ -148,11 +148,11 @@ function AvailableAgentSkills({ skills, settings, toggleAgentSkill }) {
     <div>
       <div className="flex flex-col mb-8">
         <div className="flex w-full justify-between items-center">
-          <label htmlFor="name" className="text-white text-md font-semibold">
+          <label htmlFor="name" className="text-theme-text text-md font-semibold">
             Default agent skills
           </label>
         </div>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           Improve the natural abilities of the default agent with these
           pre-built skills. This set up applies to all workspaces.
         </p>

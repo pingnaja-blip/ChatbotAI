@@ -13,7 +13,7 @@ export default function TogetherAiOptions({ settings }) {
           name="TogetherAiApiKey"
           className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
           placeholder="Together AI API Key"
-          defaultValue={settings?.TogetherAiApiKey ? "*".repeat(20) : ""}
+          defaultValue={settings?.TogetherAiApiKey ?? ""}
           required={true}
           autoComplete="off"
           spellCheck={false}

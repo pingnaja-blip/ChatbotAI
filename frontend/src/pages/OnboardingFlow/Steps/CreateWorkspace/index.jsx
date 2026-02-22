@@ -69,14 +69,14 @@ export default function CreateWorkspace({
         <div className="w-full mt-4">
           <label
             htmlFor="name"
-            className="block mb-3 text-sm font-medium text-white"
+            className="block mb-3 text-sm font-medium text-theme-text"
           >
             Workspace Name
           </label>
           <input
             name="name"
             type="text"
-            className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg block w-full p-2.5"
+            className="theme-input block w-full"
             placeholder="My Workspace"
             required={true}
             autoComplete="off"

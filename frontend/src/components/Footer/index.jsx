@@ -55,7 +55,7 @@ export default function Footer() {
               href={paths.github()}
               target="_blank"
               rel="noreferrer"
-              className="transition-all duration-300 p-2 rounded-full text-white bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
+              className="transition-all duration-300 p-2 rounded-full text-theme-text bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
               aria-label="Find us on Github"
               data-tooltip-id="open-github"
               data-tooltip-content="View source code on Github"
@@ -68,7 +68,7 @@ export default function Footer() {
               href={paths.docs()}
               target="_blank"
               rel="noreferrer"
-              className="w-fit transition-all duration-300 p-2 rounded-full text-white bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
+              className="w-fit transition-all duration-300 p-2 rounded-full text-theme-text bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
               aria-label="Docs"
               data-tooltip-id="open-documentation"
               data-tooltip-content={`Open ${projectIdentity.name} help docs`}
@@ -81,7 +81,7 @@ export default function Footer() {
               href={paths.discord()}
               target="_blank"
               rel="noreferrer"
-              className="transition-all duration-300 p-2 rounded-full text-white bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
+              className="transition-all duration-300 p-2 rounded-full text-theme-text bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
               aria-label="Join our Discord server"
               data-tooltip-id="open-discord"
               data-tooltip-content={`Join the ${projectIdentity.name} Discord`}
@@ -107,7 +107,7 @@ export default function Footer() {
             href={item.url}
             target="_blank"
             rel="noreferrer"
-            className="transition-all duration-300 p-2 rounded-full text-white bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
+            className="transition-all duration-300 p-2 rounded-full text-theme-text bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
           >
             {React.createElement(
               ICON_COMPONENTS?.[item.icon] ?? ICON_COMPONENTS.Info,

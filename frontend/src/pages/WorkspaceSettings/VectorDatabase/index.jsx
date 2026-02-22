@@ -52,7 +52,7 @@ export default function VectorDatabase({ workspace }) {
       {hasChanges && (
         <button
           type="submit"
-          className="w-fit transition-all duration-300 border border-slate-200 px-5 py-2.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+          className="w-fit transition-all duration-300 border border-slate-200 px-5 py-2.5 rounded-lg text-theme-text text-sm items-center flex gap-x-2 hover:bg-sidebar-button hover:text-theme-text focus:ring-gray-800"
         >
           {saving ? "Updating..." : "Update workspace"}
         </button>

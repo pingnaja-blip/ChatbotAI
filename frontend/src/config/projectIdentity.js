@@ -7,17 +7,17 @@
 
 export const projectIdentity = {
   /** Display name used across the app (login, titles, placeholders) */
-  name: "ChatbotAI",
+  name: "KBTG Regional Team",
 
   /** Tagline shown in onboarding and marketing copy */
   tagline: "Your personal AI assistant trained on your data",
 
   /** Short description for meta tags and previews */
   description:
-    "ChatbotAI is an open-source AI chatbot platform. Connect your documents, customize your LLM, and chat with your data.",
+    "KBTG Regional Team is an AI chatbot platform. Connect your documents, customize your LLM, and chat with your data.",
 
   /** Default app name when no custom name is configured (login page, headers) */
-  defaultAppName: "ChatbotAI",
+  defaultAppName: "KBTG Regional Team",
 
   /** URLs for external resources */
   urls: {
@@ -28,9 +28,10 @@ export const projectIdentity = {
 
   /** Meta / Open Graph configuration for SEO and social sharing */
   meta: {
-    title: "ChatbotAI | Your personal AI assistant trained on your data",
+    title:
+      "KBTG Regional Team | Your personal AI assistant trained on your data",
     description:
-      "ChatbotAI is an open-source AI chatbot platform. Connect your documents, customize your LLM, and chat with your data.",
+      "KBTG Regional Team is an AI chatbot platform. Connect your documents, customize your LLM, and chat with your data.",
     ogImage: "/favicon.png",
   },
 };

@@ -103,10 +103,10 @@ export default function AgentWebSearchSelection({
               onClick={() => toggleSkill(skill)}
             />
             <div className="pointer-events-none peer h-6 w-11 rounded-full bg-stone-400 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:shadow-xl after:border after:border-gray-600 after:bg-white after:box-shadow-md after:transition-all after:content-[''] peer-checked:bg-lime-300 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800"></div>
-            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+            <span className="ml-3 text-sm font-medium text-theme-text"></span>
           </label>
         </div>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           Enable your agent to search the web to answer your questions by
           connecting to a web-search (SERP) provider.
           <br />
@@ -127,20 +127,20 @@ export default function AgentWebSearchSelection({
             />
           )}
           {searchMenuOpen ? (
-            <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] overflow-auto white-scrollbar min-h-[64px] bg-[#18181B] rounded-lg flex flex-col justify-between cursor-pointer border-2 border-[#46C8FF] z-20">
+            <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] overflow-auto white-scrollbar min-h-[64px] bg-dropdown-bg rounded-lg flex flex-col justify-between cursor-pointer border-2 border-outline z-20">
               <div className="w-full flex flex-col gap-y-1">
-                <div className="flex items-center sticky top-0 border-b border-[#9CA3AF] mx-4 bg-[#18181B]">
+                <div className="flex items-center sticky top-0 border-b border-outline mx-4 bg-dropdown-bg">
                   <MagnifyingGlass
                     size={20}
                     weight="bold"
-                    className="absolute left-4 z-30 text-white -ml-4 my-2"
+                    className="absolute left-4 z-30 text-theme-text-muted -ml-4 my-2"
                   />
                   <input
                     type="text"
                     name="web-provider-search"
                     autoComplete="off"
                     placeholder="Search available web-search providers"
-                    className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none focus:border-white text-white placeholder:text-white placeholder:font-medium"
+                    className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none focus:border-outline text-theme-text placeholder:text-theme-text-muted placeholder:font-medium"
                     onChange={(e) => setSearchQuery(e.target.value)}
                     ref={searchInputRef}
                     onKeyDown={(e) => {
@@ -150,7 +150,7 @@ export default function AgentWebSearchSelection({
                   <X
                     size={20}
                     weight="bold"
-                    className="cursor-pointer text-white hover:text-[#9CA3AF]"
+                    className="cursor-pointer text-theme-text-muted hover:text-theme-text"
                     onClick={handleXButton}
                   />
                 </div>
@@ -170,7 +170,7 @@ export default function AgentWebSearchSelection({
             </div>
           ) : (
             <button
-              className="w-full max-w-[640px] h-[64px] bg-[#18181B] rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-[#46C8FF] transition-all duration-300"
+              className="w-full max-w-[640px] h-[64px] bg-dropdown-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-outline hover:border-[#46C8FF] transition-all duration-300"
               type="button"
               onClick={() => setSearchMenuOpen(true)}
             >
@@ -181,15 +181,15 @@ export default function AgentWebSearchSelection({
                   className="w-10 h-10 rounded-md"
                 />
                 <div className="flex flex-col text-left">
-                  <div className="text-sm font-semibold text-white">
+                  <div className="text-sm font-semibold text-theme-text">
                     {selectedSearchProviderObject.name}
                   </div>
-                  <div className="mt-1 text-xs text-[#D2D5DB]">
+                  <div className="mt-1 text-xs text-theme-text-muted">
                     {selectedSearchProviderObject.description}
                   </div>
                 </div>
               </div>
-              <CaretUpDown size={24} weight="bold" className="text-white" />
+              <CaretUpDown size={24} weight="bold" className="text-theme-text" />
             </button>
           )}
         </div>

@@ -24,21 +24,21 @@ export default function FileRow({ item, selected, toggleSelection }) {
   return (
     <tr
       onClick={() => toggleSelection(item)}
-      className={`text-white/80 text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 hover:bg-sky-500/20 cursor-pointer file-row ${
-        selected ? "selected" : ""
+      className={`text-slate-700 text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 hover:bg-sky-100 cursor-pointer file-row border-b border-slate-200 ${
+        selected ? "selected bg-sky-50" : "bg-slate-50"
       }`}
     >
       <div className="pl-2 col-span-6 flex gap-x-[4px] items-center">
         <div
-          className="shrink-0 w-3 h-3 rounded border-[1px] border-white flex justify-center items-center cursor-pointer"
+          className="shrink-0 w-3 h-3 rounded border-[1px] border-slate-600 flex justify-center items-center cursor-pointer"
           role="checkbox"
           aria-checked={selected}
           tabIndex={0}
         >
-          {selected && <div className="w-2 h-2 bg-white rounded-[2px]" />}
+          {selected && <div className="w-2 h-2 bg-slate-700 rounded-[2px]" />}
         </div>
         <File
-          className="shrink-0 text-base font-bold w-4 h-4 mr-[3px]"
+          className="shrink-0 text-base font-bold w-4 h-4 mr-[3px] text-slate-700"
           weight="fill"
         />
         <div
@@ -50,7 +50,7 @@ export default function FileRow({ item, selected, toggleSelection }) {
             {middleTruncate(item.title, 17)}
           </p>
           {showTooltip && (
-            <div className="absolute left-0 bg-white text-black p-1.5 rounded shadow-lg whitespace-nowrap">
+            <div className="absolute left-0 bg-white text-slate-900 p-1.5 rounded shadow-lg whitespace-nowrap border border-slate-200">
               {item.title}
             </div>
           )}
@@ -64,8 +64,8 @@ export default function FileRow({ item, selected, toggleSelection }) {
       </p>
       <div className="-col-span-2 flex justify-end items-center">
         {item?.cached && (
-          <div className="bg-white/10 rounded-3xl">
-            <p className="text-xs px-2 py-0.5">Cached</p>
+          <div className="bg-slate-200 rounded-3xl">
+            <p className="text-slate-700 text-xs px-2 py-0.5">Cached</p>
           </div>
         )}
       </div>

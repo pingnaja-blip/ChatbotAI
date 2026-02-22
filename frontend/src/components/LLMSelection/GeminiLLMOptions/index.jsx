@@ -11,7 +11,7 @@ export default function GeminiLLMOptions({ settings }) {
             name="GeminiLLMApiKey"
             className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
             placeholder="Google Gemini API Key"
-            defaultValue={settings?.GeminiLLMApiKey ? "*".repeat(20) : ""}
+            defaultValue={settings?.GeminiLLMApiKey ?? ""}
             required={true}
             autoComplete="off"
             spellCheck={false}

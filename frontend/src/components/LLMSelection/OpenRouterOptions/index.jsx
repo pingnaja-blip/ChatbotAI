@@ -13,7 +13,7 @@ export default function OpenRouterOptions({ settings }) {
           name="OpenRouterApiKey"
           className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
           placeholder="OpenRouter API Key"
-          defaultValue={settings?.OpenRouterApiKey ? "*".repeat(20) : ""}
+          defaultValue={settings?.OpenRouterApiKey ?? ""}
           required={true}
           autoComplete="off"
           spellCheck={false}

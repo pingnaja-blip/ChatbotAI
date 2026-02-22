@@ -11,7 +11,7 @@ export default function VoyageAiOptions({ settings }) {
             name="VoyageAiApiKey"
             className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
             placeholder="Voyage AI API Key"
-            defaultValue={settings?.VoyageAiApiKey ? "*".repeat(20) : ""}
+            defaultValue={settings?.VoyageAiApiKey ?? ""}
             required={true}
             autoComplete="off"
             spellCheck={false}

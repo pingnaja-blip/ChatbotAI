@@ -291,8 +291,11 @@ NODE_ENV=production
 SERVER_PORT=3001
 STORAGE_DIR=/app/server/storage
 
-# Add LLM provider keys as needed, e.g.:
-# OPENAI_API_KEY=sk-...
+# Chat LLM (e.g. DeepSeek): set in General Settings → LLM Preference, or here:
+# LLM_PROVIDER=generic-openai
+# GENERIC_OPEN_AI_BASE_PATH=https://api.deepseek.com
+# GENERIC_OPEN_AI_API_KEY=your-deepseek-key   # from https://platform.deepseek.com (do not use Aliyun key)
+# Note: Opening https://api.deepseek.com in a browser shows "Authentication Fails (governor)" — that is expected; the API is used by the app with your key, not in the browser.
 ```
 
 Save and exit (in nano: `Ctrl+O`, Enter, then `Ctrl+X`). Ensure the file is readable by the user that runs Docker (e.g. `chmod 600 /data/anythingllm/.env` if needed).

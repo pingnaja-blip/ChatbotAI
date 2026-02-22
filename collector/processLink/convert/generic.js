@@ -6,6 +6,22 @@ const { writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 
+function looksLikeErrorPage(content) {
+  if (!content || typeof content !== "string") return false;
+  const lower = content.trim().toLowerCase();
+  const snippet = lower.slice(0, 2000);
+  const errorIndicators = [
+    "access denied",
+    "accessdenied",
+    "<code>accessdenied</code>",
+    "403 forbidden",
+    "403 for forbidden",
+    "error code: accessdenied",
+    "this xml file does not appear to have any style",
+  ];
+  return errorIndicators.some((indicator) => snippet.includes(indicator));
+}
+
 async function scrapeGenericUrl(link, textOnly = false) {
   console.log(`-- Working URL ${link} --`);
   const content = await getPageContent(link);
@@ -15,6 +31,15 @@ async function scrapeGenericUrl(link, textOnly = false) {
     return {
       success: false,
       reason: `No URL content found at ${link}.`,
+      documents: [],
+    };
+  }
+
+  if (looksLikeErrorPage(content)) {
+    console.error(`URL returned an error page (e.g. Access Denied) at ${link}.`);
+    return {
+      success: false,
+      reason: `The URL returned an "Access Denied" or error page. Check that the link is publicly accessible or use a signed URL.`,
       documents: [],
     };
   }

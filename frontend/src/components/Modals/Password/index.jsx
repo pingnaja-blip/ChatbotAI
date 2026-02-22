@@ -34,14 +34,14 @@ export default function PasswordModal({ mode = "single" }) {
         />
       </div>
       <div className="flex flex-col items-center justify-center h-full w-full md:w-1/2 z-50 relative">
-        <img
-          src={loginLogo}
-          alt="Logo"
-          className={`hidden md:flex rounded-2xl w-fit m-4 z-30 ${
-            mode === "single" ? "md:top-[170px]" : "md:top-36"
-          } absolute max-h-[65px] md:bg-login-gradient md:shadow-[0_4px_14px_rgba(0,0,0,0.25)]`}
-          style={{ objectFit: "contain" }}
-        />
+        {mode === "single" && (
+          <img
+            src={loginLogo}
+            alt="Logo"
+            className="hidden md:flex rounded-2xl w-fit m-4 z-30 md:top-[170px] absolute max-h-[65px] md:bg-login-gradient md:shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
+            style={{ objectFit: "contain" }}
+          />
+        )}
         {mode === "single" ? <SingleUserAuth /> : <MultiUserAuth />}
       </div>
     </div>
@@ -56,6 +56,9 @@ export function usePasswordModal(notry = false) {
   });
 
   useEffect(() => {
+    const AUTH_CHECK_TIMEOUT_MS = 15_000;
+    let timeoutId;
+
     async function checkAuthReq() {
       if (!window) return;
 
@@ -70,7 +73,20 @@ export function usePasswordModal(notry = false) {
         return;
       }
 
+      let timedOut = false;
+      timeoutId = setTimeout(() => {
+        timedOut = true;
+        setAuth({
+          loading: false,
+          requiresAuth: true,
+          mode: "single",
+        });
+      }, AUTH_CHECK_TIMEOUT_MS);
+
       const settings = await System.keys();
+      if (timedOut) return;
+      clearTimeout(timeoutId);
+
       if (settings?.MultiUserMode) {
         const currentToken = window.localStorage.getItem(AUTH_TOKEN);
         if (!!currentToken) {
@@ -146,6 +162,9 @@ export function usePasswordModal(notry = false) {
       }
     }
     checkAuthReq();
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
   return auth;

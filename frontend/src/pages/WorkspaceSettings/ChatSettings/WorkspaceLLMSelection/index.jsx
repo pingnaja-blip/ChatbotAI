@@ -65,7 +65,7 @@ export default function WorkspaceLLMSelection({
         <label htmlFor="name" className="block input-label">
           Workspace LLM Provider
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           The specific LLM provider & model that will be used for this
           workspace. By default, it uses the system LLM provider and settings.
         </p>
@@ -86,14 +86,14 @@ export default function WorkspaceLLMSelection({
                 <MagnifyingGlass
                   size={20}
                   weight="bold"
-                  className="absolute left-4 z-30 text-white -ml-4 my-2"
+                  className="absolute left-4 z-30 text-theme-text -ml-4 my-2"
                 />
                 <input
                   type="text"
                   name="llm-search"
                   autoComplete="off"
                   placeholder="Search all LLM providers"
-                  className="-ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none focus:border-white text-white placeholder:text-white placeholder:font-medium"
+                  className="-ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none focus:border-outline text-theme-text placeholder:text-theme-text-muted placeholder:font-medium"
                   onChange={(e) => setSearchQuery(e.target.value)}
                   ref={searchInputRef}
                   onKeyDown={(e) => {
@@ -103,7 +103,7 @@ export default function WorkspaceLLMSelection({
                 <X
                   size={20}
                   weight="bold"
-                  className="cursor-pointer text-white hover:text-[#9CA3AF]"
+                  className="cursor-pointer text-theme-text hover:text-theme-text-muted"
                   onClick={handleXButton}
                 />
               </div>
@@ -136,7 +136,7 @@ export default function WorkspaceLLMSelection({
                 className="w-10 h-10 rounded-md"
               />
               <div className="flex flex-col text-left">
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-theme-text">
                   {selectedLLMObject.name}
                 </div>
                 <div className="mt-1 text-xs text-[#D2D5DB]">
@@ -144,7 +144,7 @@ export default function WorkspaceLLMSelection({
                 </div>
               </div>
             </div>
-            <CaretUpDown size={24} weight="bold" className="text-white" />
+            <CaretUpDown size={24} weight="bold" className="text-theme-text" />
           </button>
         )}
       </div>

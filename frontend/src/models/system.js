@@ -67,13 +67,18 @@ const System = {
   requestToken: async function (body) {
     return await fetch(`${API_BASE}/request-token`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...body }),
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Could not validate login.");
-        return res.json();
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(
+            data.message || data.error || "Could not validate login."
+          );
+        }
+        return data;
       })
-      .then((res) => res)
       .catch((e) => {
         return { valid: false, message: e.message };
       });
@@ -530,6 +535,29 @@ const System = {
       .catch((e) => {
         console.error(e);
         return { models: [], error: e.message };
+      });
+  },
+  validateLlmKey: async function () {
+    return fetch(`${API_BASE}/system/validate-llm-key`, {
+      method: "GET",
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .catch((e) => {
+        console.error(e);
+        return { valid: false, error: e.message };
+      });
+  },
+  validateAiApiKey: async function (provider, apiKey, basePath = null) {
+    return fetch(`${API_BASE}/system/validate-ai-api-key`, {
+      method: "POST",
+      headers: baseHeaders(),
+      body: JSON.stringify({ provider, apiKey, basePath }),
+    })
+      .then((res) => res.json())
+      .catch((e) => {
+        console.error(e);
+        return { valid: false, error: e.message };
       });
   },
   chats: async (offset = 0) => {

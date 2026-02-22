@@ -17,10 +17,10 @@ export default function VectorCount({ reload, workspace }) {
     return (
       <div>
         <h3 className="input-label">Number of vectors</h3>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1">
+        <p className="text-theme-text-muted text-xs font-medium py-1">
           Total number of vectors in your vector database.
         </p>
-        <p className="text-white text-opacity-60 text-sm font-medium">
+        <p className="text-theme-text-muted text-sm font-medium">
           <PreLoader size="4" />
         </p>
       </div>
@@ -28,7 +28,7 @@ export default function VectorCount({ reload, workspace }) {
   return (
     <div>
       <h3 className="input-label">Number of vectors</h3>
-      <p className="text-white text-opacity-60 text-sm font-medium">
+      <p className="text-theme-text-muted text-sm font-medium">
         {totalVectors}
       </p>
     </div>

@@ -31,7 +31,7 @@ function getVectorDbClass() {
 }
 
 function getLLMProvider({ provider = null, model = null } = {}) {
-  const LLMSelection = provider ?? process.env.LLM_PROVIDER ?? "openai";
+  const LLMSelection = provider ?? process.env.LLM_PROVIDER ?? "generic-openai";
   const embedder = getEmbeddingEngineSelection();
 
   switch (LLMSelection) {
@@ -92,6 +92,22 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "generic-openai":
       const { GenericOpenAiLLM } = require("../AiProviders/genericOpenAi");
       return new GenericOpenAiLLM(embedder, model);
+    case "deepseek": {
+      const { GenericOpenAiLLM: DeepSeekLLM } = require("../AiProviders/genericOpenAi");
+      return new DeepSeekLLM(embedder, model || "deepseek-chat", {
+        basePath: "https://api.deepseek.com",
+        apiKey: process.env.GENERIC_OPEN_AI_API_KEY,
+        tokenLimit: 128000,
+      });
+    }
+    case "qwen": {
+      const { GenericOpenAiLLM: QwenLLM } = require("../AiProviders/genericOpenAi");
+      return new QwenLLM(embedder, model || "qwen-turbo", {
+        basePath: "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+        apiKey: process.env.DASHSCOPE_API_KEY || process.env.GENERIC_OPEN_AI_API_KEY,
+        tokenLimit: 8000,
+      });
+    }
     default:
       throw new Error(
         `ENV: No valid LLM_PROVIDER value found in environment! Using ${process.env.LLM_PROVIDER}`

@@ -61,7 +61,7 @@ export default function LiteLLMOptions({ settings }) {
             name="LiteLLMAPIKey"
             className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
             placeholder="sk-mysecretkey"
-            defaultValue={settings?.LiteLLMAPIKey ? "*".repeat(20) : ""}
+            defaultValue={settings?.LiteLLMApiKey ?? ""}
             autoComplete="off"
             spellCheck={false}
             onChange={(e) => setApiKeyValue(e.target.value)}

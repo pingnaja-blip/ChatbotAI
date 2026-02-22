@@ -23,30 +23,35 @@ function ShowWorkspaceChat() {
   const [workspace, setWorkspace] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const refreshWorkspace = async () => {
+    if (!slug) return;
+    const _workspace = await Workspace.bySlug(slug);
+    if (!_workspace) return;
+    const suggestedMessages = await Workspace.getSuggestedMessages(slug);
+    const pfpUrl = await Workspace.fetchPfp(slug);
+    setWorkspace({
+      ..._workspace,
+      suggestedMessages,
+      pfpUrl,
+    });
+  };
+
   useEffect(() => {
-    async function getWorkspace() {
-      if (!slug) return;
-      const _workspace = await Workspace.bySlug(slug);
-      if (!_workspace) {
-        setLoading(false);
-        return;
-      }
-      const suggestedMessages = await Workspace.getSuggestedMessages(slug);
-      const pfpUrl = await Workspace.fetchPfp(slug);
-      setWorkspace({
-        ..._workspace,
-        suggestedMessages,
-        pfpUrl,
-      });
-      setLoading(false);
-    }
-    getWorkspace();
-  }, []);
+    refreshWorkspace().finally(() => setLoading(false));
+  }, [slug]);
+
+  const handleWorkspaceUpdate = (updated) => {
+    if (updated) setWorkspace((prev) => (prev ? { ...prev, ...updated } : prev));
+  };
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-sidebar flex">
       {!isMobile && <Sidebar />}
-      <WorkspaceChatContainer loading={loading} workspace={workspace} />
+      <WorkspaceChatContainer
+        loading={loading}
+        workspace={workspace}
+        onWorkspaceUpdate={handleWorkspaceUpdate}
+      />
     </div>
   );
 }

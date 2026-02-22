@@ -7,7 +7,10 @@ class CollectorApi {
   constructor() {
     const { CommunicationKey } = require("../comKey");
     this.comkey = new CommunicationKey();
-    this.endpoint = `http://0.0.0.0:${process.env.COLLECTOR_PORT || 8888}`;
+    // Use 127.0.0.1 so the server can reach the collector on Windows; in Docker set COLLECTOR_HOST if needed (e.g. collector).
+    const host = process.env.COLLECTOR_HOST || "127.0.0.1";
+    const port = process.env.COLLECTOR_PORT || 8888;
+    this.endpoint = `http://${host}:${port}`;
   }
 
   log(text, ...args) {
@@ -38,6 +41,26 @@ class CollectorApi {
       .catch((e) => {
         this.log(e.message);
         return null;
+      });
+  }
+
+  /**
+   * Validate the collector's Qwen (DashScope) API key via real API call.
+   * @returns {Promise<{ valid: boolean, error?: string }>}
+   */
+  async validateCollectorQwenKey() {
+    return await fetch(`${this.endpoint}/validate-dashscope`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Collector validation endpoint failed");
+        return res.json();
+      })
+      .then((res) => ({ valid: !!res.valid, error: res.error || null }))
+      .catch((e) => {
+        this.log(e.message);
+        return {
+          valid: false,
+          error: e.message || "Collector unreachable or validation failed.",
+        };
       });
   }
 

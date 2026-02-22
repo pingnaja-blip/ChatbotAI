@@ -70,7 +70,7 @@ function apiWorkspaceEndpoints(app) {
       const { workspace, message } = await Workspace.new(name);
       await Telemetry.sendTelemetry("workspace_created", {
         multiUserMode: multiUserMode(response),
-        LLMSelection: process.env.LLM_PROVIDER || "openai",
+        LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
         Embedder: process.env.EMBEDDING_ENGINE || "inherit",
         VectorDbSelection: process.env.VECTOR_DB || "lancedb",
       });
@@ -593,7 +593,7 @@ function apiWorkspaceEndpoints(app) {
 
         const result = await chatWithWorkspace(workspace, message, mode);
         await Telemetry.sendTelemetry("sent_chat", {
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
         });
@@ -716,7 +716,7 @@ function apiWorkspaceEndpoints(app) {
 
         await streamChatWithWorkspace(response, workspace, message, mode);
         await Telemetry.sendTelemetry("sent_chat", {
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection: process.env.LLM_PROVIDER || "generic-openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
         });

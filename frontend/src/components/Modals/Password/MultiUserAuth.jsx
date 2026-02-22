@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 import System from "../../../models/system";
 import { AUTH_TOKEN, AUTH_USER } from "../../../utils/constants";
 import { projectIdentity } from "@/config/projectIdentity";
@@ -35,10 +36,10 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
     >
       <div className="flex items-start justify-between pt-11 pb-9 w-screen md:w-full md:px-12 px-6 ">
         <div className="flex flex-col gap-y-4 w-full">
-          <h3 className="text-4xl md:text-lg font-bold text-white text-center md:text-left">
+          <h3 className="text-4xl md:text-lg font-bold text-theme-text text-center md:text-left">
             Password Reset
           </h3>
-          <p className="text-sm text-white/90 md:text-left md:max-w-[300px] px-4 md:px-0 text-center">
+          <p className="text-sm text-theme-text-muted md:text-left md:max-w-[300px] px-4 md:px-0 text-center">
             Provide the necessary information below to reset your password.
           </p>
         </div>
@@ -46,19 +47,19 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
       <div className="md:px-12 px-6 space-y-6 flex h-full w-full">
         <div className="w-full flex flex-col gap-y-4">
           <div className="flex flex-col gap-y-2">
-            <label className="text-white text-sm font-bold">Username</label>
+            <label className="text-theme-text text-sm font-bold">Username</label>
             <input
               name="username"
               type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
+              className="theme-input w-full h-[48px] md:w-[300px] md:h-[34px]"
               required
             />
           </div>
           <div className="flex flex-col gap-y-2">
-            <label className="text-white text-sm font-bold">
+            <label className="text-theme-text text-sm font-bold">
               Recovery Codes
             </label>
             {recoveryCodeInputs.map((code, index) => (
@@ -71,7 +72,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
                   onChange={(e) =>
                     handleRecoveryCodeChange(index, e.target.value)
                   }
-                  className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
+                  className="theme-input w-full h-[48px] md:w-[300px] md:h-[34px]"
                   required
                 />
               </div>
@@ -88,7 +89,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
         </button>
         <button
           type="button"
-          className="text-white text-sm flex gap-x-1 hover:text-[#46C8FF] hover:underline -mb-8"
+          className="text-theme-text text-sm flex gap-x-1 hover:text-[#46C8FF] hover:underline -mb-8"
           onClick={() => setShowRecoveryForm(false)}
         >
           Back to Login
@@ -114,10 +115,10 @@ const ResetPasswordForm = ({ onSubmit }) => {
     >
       <div className="flex items-start justify-between pt-11 pb-9 w-screen md:w-full md:px-12 px-6">
         <div className="flex flex-col gap-y-4 w-full">
-          <h3 className="text-4xl md:text-2xl font-bold text-white text-center md:text-left">
+          <h3 className="text-4xl md:text-2xl font-bold text-theme-text text-center md:text-left">
             Reset Password
           </h3>
-          <p className="text-sm text-white/90 md:text-left md:max-w-[300px] px-4 md:px-0 text-center">
+          <p className="text-sm text-theme-text-muted md:text-left md:max-w-[300px] px-4 md:px-0 text-center">
             Enter your new password.
           </p>
         </div>
@@ -131,7 +132,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
               placeholder="New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
+              className="theme-input w-full h-[48px] md:w-[300px] md:h-[34px]"
               required
             />
           </div>
@@ -142,7 +143,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
+              className="theme-input w-full h-[48px] md:w-[300px] md:h-[34px]"
               required
             />
           </div>
@@ -170,6 +171,7 @@ export default function MultiUserAuth() {
   const [showRecoveryForm, setShowRecoveryForm] = useState(false);
   const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
   const [customAppName, setCustomAppName] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     isOpen: isRecoveryCodeModalOpen,
@@ -272,64 +274,86 @@ export default function MultiUserAuth() {
 
   if (showResetPasswordForm)
     return <ResetPasswordForm onSubmit={handleResetSubmit} />;
+  const appName = customAppName || projectIdentity.defaultAppName;
+  const isKbtg = /KBTG\s*Regional\s*Team/i.test(appName);
+  const titleParts = isKbtg
+    ? { blue: "KBTG Regional", white: " Team" }
+    : { blue: appName, white: "" };
+
   return (
     <>
       <form onSubmit={handleLogin}>
-        <div className="flex flex-col justify-center items-center relative rounded-2xl md:bg-login-gradient md:shadow-[0_4px_14px_rgba(0,0,0,0.25)] md:px-12 py-12 -mt-4 md:mt-0">
-          <div className="flex items-start justify-between pt-11 pb-9 rounded-t">
-            <div className="flex items-center flex-col gap-y-4">
-              <div className="flex gap-x-1">
-                <h3 className="text-md md:text-2xl font-bold text-white text-center white-space-nowrap hidden md:block">
-                  Welcome to
-                </h3>
-                <p className="text-4xl md:text-2xl font-bold bg-gradient-to-r from-[#75D6FF] via-[#FFFFFF] to-[#FFFFFF] bg-clip-text text-transparent">
-                  {customAppName || projectIdentity.defaultAppName}
-                </p>
-              </div>
-              <p className="text-sm text-white/90 text-center">
-                Sign in to your {customAppName || projectIdentity.defaultAppName} account.
-              </p>
-            </div>
+        <div className="flex flex-col justify-center items-center relative rounded-2xl md:bg-login-gradient md:shadow-[0_4px_14px_rgba(0,0,0,0.25)] md:px-12 py-10 -mt-4 md:mt-0">
+          <div className="flex flex-col items-center pb-6 rounded-t">
+            <h1 className="text-2xl md:text-3xl font-bold text-center mb-2">
+              <span className="text-[#75D6FF]">{titleParts.blue}</span>
+              <span className="text-white">{titleParts.white}</span>
+            </h1>
+            <p className="text-sm text-gray-400 text-center">
+              Sign in to your {appName} account.
+            </p>
           </div>
           <div className="w-full px-4 md:px-12">
             <div className="w-full flex flex-col gap-y-4">
-              <div className="w-screen md:w-full md:px-0 px-6">
+              <div className="w-screen md:w-full md:px-0 px-6 flex flex-col gap-y-1">
+                <label htmlFor="login-username" className="text-theme-text text-sm font-medium">
+                  Username
+                </label>
                 <input
+                  id="login-username"
                   name="username"
                   type="text"
                   placeholder="Username"
-                  className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
+                  className="theme-input w-full h-[48px] md:w-[300px] md:h-[40px]"
                   required={true}
                   autoComplete="off"
                 />
               </div>
-              <div className="w-screen md:w-full md:px-0 px-6">
-                <input
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
-                  required={true}
-                  autoComplete="off"
-                />
+              <div className="w-screen md:w-full md:px-0 px-6 flex flex-col gap-y-1 relative">
+                <label htmlFor="login-password" className="text-theme-text text-sm font-medium">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    id="login-password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    className="theme-input w-full h-[48px] md:w-[300px] md:h-[40px] pr-10"
+                    required={true}
+                    autoComplete="off"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded text-theme-text-muted hover:text-theme-text focus:outline-none focus:ring-2 focus:ring-[#46C8FF] focus:ring-offset-0"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? (
+                      <EyeSlash className="h-5 w-5" weight="bold" />
+                    ) : (
+                      <Eye className="h-5 w-5" weight="bold" />
+                    )}
+                  </button>
+                </div>
               </div>
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}
             </div>
           </div>
-          <div className="flex items-center md:p-12 px-10 mt-12 md:mt-0 space-x-2 border-gray-600 w-full flex-col gap-y-8">
+          <div className="flex flex-col items-center w-full px-4 md:px-12 pt-6 gap-y-4">
             <button
               disabled={loading}
               type="submit"
-              className="md:text-[#46C8FF] md:bg-transparent text-[#222628] text-sm font-bold focus:ring-4 focus:outline-none rounded-md border-[1.5px] border-[#46C8FF] md:h-[34px] h-[48px] md:hover:text-white md:hover:bg-[#46C8FF] bg-[#46C8FF] focus:z-10 w-full"
+              className="w-full md:w-[300px] h-[48px] md:h-[44px] rounded-md font-semibold text-white bg-[#46C8FF] hover:bg-[#3ab5e6] focus:ring-4 focus:ring-[#46C8FF]/50 focus:outline-none transition-colors"
             >
               {loading ? "Validating..." : "Login"}
             </button>
             <button
               type="button"
-              className="text-white text-sm flex gap-x-1 hover:text-[#46C8FF] hover:underline"
+              className="text-gray-400 text-sm hover:text-[#46C8FF] hover:underline"
               onClick={handleResetPassword}
             >
-              Forgot password?<b>Reset</b>
+              Forgot password? <b className="text-theme-text">Reset</b>
             </button>
           </div>
         </div>

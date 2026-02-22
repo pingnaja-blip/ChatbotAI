@@ -48,13 +48,13 @@ export default function WorkspacePfp({ workspace, slug }) {
     <div className="mt-6">
       <div className="flex flex-col">
         <label className="block input-label">Assistant Profile Image</label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           Customize the profile image of the assistant for this workspace.
         </p>
       </div>
       <div className="flex flex-col md:flex-row items-center gap-8">
         <div className="flex flex-col items-center">
-          <label className="w-36 h-36 flex flex-col items-center justify-center bg-zinc-900/50 transition-all duration-300 rounded-full mt-8 border-2 border-dashed border-white border-opacity-60 cursor-pointer hover:opacity-60">
+          <label className="w-36 h-36 flex flex-col items-center justify-center bg-gray-100 transition-all duration-300 rounded-full mt-8 border-2 border-dashed border-outline cursor-pointer hover:opacity-60">
             <input
               id="workspace-pfp-upload"
               type="file"
@@ -70,11 +70,11 @@ export default function WorkspacePfp({ workspace, slug }) {
               />
             ) : (
               <div className="flex flex-col items-center justify-center p-3">
-                <Plus className="w-8 h-8 text-white/80 m-2" />
-                <span className="text-white text-opacity-80 text-xs font-semibold">
+                <Plus className="w-8 h-8 text-theme-text-muted m-2" />
+                <span className="text-theme-text text-xs font-semibold">
                   Workspace Image
                 </span>
-                <span className="text-white text-opacity-60 text-xs">
+                <span className="text-theme-text-muted text-xs">
                   800 x 800
                 </span>
               </div>
@@ -84,7 +84,7 @@ export default function WorkspacePfp({ workspace, slug }) {
             <button
               type="button"
               onClick={handleRemovePfp}
-              className="mt-3 text-white text-opacity-60 text-sm font-medium hover:underline"
+              className="mt-3 text-theme-text-muted text-sm font-medium hover:underline"
             >
               Remove Workspace Image
             </button>

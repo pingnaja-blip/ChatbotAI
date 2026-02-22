@@ -26,14 +26,14 @@ export default function Sidebar() {
     <div>
       <Link
         to={paths.home()}
-        className="flex shrink-0 max-w-[55%] items-center justify-start mx-[38px] my-[18px]"
+        className="flex shrink-0 w-full items-center justify-center mx-[24px] my-[18px] min-h-[80px] overflow-hidden"
         aria-label="Home"
       >
         <img
           src={logo}
-          alt="Logo"
-          className="rounded max-h-[24px]"
-          style={{ objectFit: "contain" }}
+          alt="KBTG Regional Team"
+          className="w-full h-auto rounded"
+          style={{ objectFit: "contain", maxHeight: "80px" }}
         />
       </Link>
       <div
@@ -48,10 +48,10 @@ export default function Sidebar() {
                 {(!user || user?.role !== "default") && (
                   <button
                     onClick={showNewWsModal}
-                    className="flex flex-grow w-[75%] h-[44px] gap-x-2 py-[5px] px-2.5 mb-2 bg-white rounded-[8px] text-sidebar justify-center items-center hover:bg-opacity-80 transition-all duration-300"
+                    className="flex flex-grow w-[75%] h-[44px] gap-x-2 py-[5px] px-2.5 mb-2 bg-white rounded-[8px] text-theme-text justify-center items-center hover:bg-opacity-80 transition-all duration-300"
                   >
                     <Plus size={18} weight="bold" />
-                    <p className="text-sidebar text-sm font-semibold">
+                    <p className="text-theme-text text-sm font-semibold">
                       New Workspace
                     </p>
                   </button>
@@ -101,20 +101,20 @@ export function SidebarMobileHeader() {
     <>
       <div
         aria-label="Show sidebar"
-        className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-sidebar text-slate-200 shadow-lg h-16"
+        className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-sidebar text-theme-text shadow-lg h-16"
       >
         <button
           onClick={() => setShowSidebar(true)}
-          className="rounded-md p-2 flex items-center justify-center text-slate-200"
+          className="rounded-md p-2 flex items-center justify-center text-theme-text"
         >
           <List className="h-6 w-6" />
         </button>
-        <div className="flex items-center justify-center flex-grow">
+        <div className="flex items-center justify-center flex-grow min-h-[80px] flex-1 px-2 overflow-hidden">
           <img
             src={logo}
-            alt="Logo"
-            className="block mx-auto h-6 w-auto"
-            style={{ maxHeight: "40px", objectFit: "contain" }}
+            alt="KBTG Regional Team"
+            className="w-full h-auto rounded"
+            style={{ objectFit: "contain", maxHeight: "80px" }}
           />
         </div>
         <div className="w-12"></div>
@@ -140,12 +140,12 @@ export function SidebarMobileHeader() {
           <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
             {/* Header Information */}
             <div className="flex w-full items-center justify-between gap-x-4">
-              <div className="flex shrink-1 w-fit items-center justify-start">
+              <div className="flex shrink-0 w-full min-h-[80px] flex items-center overflow-hidden">
                 <img
                   src={logo}
-                  alt="Logo"
-                  className="rounded w-full max-h-[40px]"
-                  style={{ objectFit: "contain" }}
+                  alt="KBTG Regional Team"
+                  className="w-full h-auto rounded"
+                  style={{ objectFit: "contain", maxHeight: "80px" }}
                 />
               </div>
               {(!user || user?.role !== "default") && (
@@ -169,7 +169,7 @@ export function SidebarMobileHeader() {
                         className="flex flex-grow w-[75%] h-[44px] gap-x-2 py-[5px] px-4 bg-white rounded-lg text-sidebar justify-center items-center hover:bg-opacity-80 transition-all duration-300"
                       >
                         <Plus className="h-5 w-5" />
-                        <p className="text-sidebar text-sm font-semibold">
+                        <p className="text-theme-text text-sm font-semibold">
                           New Workspace
                         </p>
                       </button>

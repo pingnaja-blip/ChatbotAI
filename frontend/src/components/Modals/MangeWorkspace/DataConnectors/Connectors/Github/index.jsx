@@ -67,17 +67,17 @@ export default function GithubOptions() {
             <div className="w-full flex flex-col gap-4">
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-slate-800 text-sm font-bold">
                     GitHub Repo URL
                   </label>
-                  <p className="text-xs font-normal text-white/50">
+                  <p className="text-xs font-normal text-slate-600">
                     Url of the GitHub repo you wish to collect.
                   </p>
                 </div>
                 <input
                   type="url"
                   name="repo"
-                  className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
+                  className="bg-slate-100 text-slate-800 placeholder:text-slate-500 border border-slate-300 text-sm rounded-lg focus:border-slate-500 block w-full p-2.5"
                   placeholder="https://github.com/Mintplex-Labs/anything-llm"
                   required={true}
                   autoComplete="off"
@@ -88,21 +88,21 @@ export default function GithubOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white font-bold text-sm flex gap-x-2 items-center">
-                    <p className="font-bold text-white">Github Access Token</p>{" "}
-                    <p className="text-xs text-white/50 font-light flex items-center">
+                  <label className="text-slate-800 font-bold text-sm flex gap-x-2 items-center">
+                    <p className="font-bold text-slate-800">Github Access Token</p>{" "}
+                    <p className="text-xs text-slate-600 font-light flex items-center">
                       optional
                       <PATTooltip accessToken={accessToken} />
                     </p>
                   </label>
-                  <p className="text-xs font-normal text-white/50">
+                  <p className="text-xs font-normal text-slate-600">
                     Access Token to prevent rate limiting.
                   </p>
                 </div>
                 <input
                   type="text"
                   name="accessToken"
-                  className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
+                  className="bg-slate-100 text-slate-800 placeholder:text-slate-500 border border-slate-300 text-sm rounded-lg focus:border-slate-500 block w-full p-2.5"
                   placeholder="github_pat_1234_abcdefg"
                   required={false}
                   autoComplete="off"
@@ -119,10 +119,10 @@ export default function GithubOptions() {
 
             <div className="flex flex-col w-full py-4 pr-10">
               <div className="flex flex-col gap-y-1 mb-4">
-                <label className="text-white text-sm flex gap-x-2 items-center">
-                  <p className="text-white text-sm font-bold">File Ignores</p>
+                <label className="text-slate-800 text-sm flex gap-x-2 items-center">
+                  <p className="text-slate-800 text-sm font-bold">File Ignores</p>
                 </label>
-                <p className="text-xs font-normal text-white/50">
+                <p className="text-xs font-normal text-slate-600">
                   List in .gitignore format to ignore specific files during
                   collection. Press enter after each entry you want to save.
                 </p>
@@ -135,7 +135,7 @@ export default function GithubOptions() {
                 classNames={{
                   tag: "bg-blue-300/10 text-zinc-800",
                   input:
-                    "flex bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white",
+                    "flex bg-slate-100 text-slate-800 placeholder:text-slate-500 border border-slate-300 text-sm rounded-lg focus:border-slate-500",
                 }}
               />
             </div>
@@ -151,7 +151,7 @@ export default function GithubOptions() {
               {loading ? "Collecting files..." : "Submit"}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-slate-600">
                 Once complete, all files will be available for embedding into
                 workspaces in the document picker.
               </p>
@@ -190,15 +190,15 @@ function GitHubBranchSelection({ repo, accessToken }) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex flex-col gap-y-1 mb-4">
-          <label className="text-white text-sm font-bold">Branch</label>
-          <p className="text-xs font-normal text-white/50">
+          <label className="text-slate-800 text-sm font-bold">Branch</label>
+          <p className="text-xs font-normal text-slate-600">
             Branch you wish to collect files from.
           </p>
         </div>
         <select
           name="branch"
           required={true}
-          className="bg-zinc-900 border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="bg-slate-100 border border-slate-300 text-slate-800 text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
             -- loading available branches --
@@ -211,15 +211,15 @@ function GitHubBranchSelection({ repo, accessToken }) {
   return (
     <div className="flex flex-col w-60">
       <div className="flex flex-col gap-y-1 mb-4">
-        <label className="text-white text-sm font-bold">Branch</label>
-        <p className="text-xs font-normal text-white/50">
+        <label className="text-slate-800 text-sm font-bold">Branch</label>
+        <p className="text-xs font-normal text-slate-600">
           Branch you wish to collect files from.
         </p>
       </div>
       <select
         name="branch"
         required={true}
-        className="bg-zinc-900 border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="bg-slate-100 border border-slate-300 text-slate-800 text-sm rounded-lg block w-full p-2.5"
       >
         {allBranches.map((branch) => {
           return (
@@ -236,7 +236,7 @@ function GitHubBranchSelection({ repo, accessToken }) {
 function PATAlert({ accessToken }) {
   if (!!accessToken) return null;
   return (
-    <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-white mb-4 bg-blue-800/30 w-fit rounded-lg px-4 py-2">
+    <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-slate-800 mb-4 bg-blue-100 border border-blue-200 w-fit rounded-lg px-4 py-2">
       <div className="gap-x-2 flex items-center">
         <Info className="shrink-0" size={25} />
         <p className="text-sm">

@@ -123,7 +123,16 @@ Key folders and what they're for:
 - **Server**: `server/.env` (or `server/.env.development` in dev). Loaded via dotenv.
 - **Frontend**: `frontend/.env` for build-time vars (e.g. VITE_*). Use `import.meta.env` in code.
 - **Docker**: `docker/.env.example` → copied to `server/.env` in image. Use `server/.env.example` as reference.
+- **Root**: `.env.example` consolidates all credentials (including Huawei Cloud) as a reference.
 - **Never commit** `.env` or secrets. Use `.env.example` as templates.
+
+### Credentials Rule
+
+- **When generating code that requires credentials** (API keys, tokens, DB URLs, etc.):
+  - Use `process.env.VAR_NAME` in server/Node code (e.g. `process.env.OPEN_AI_KEY`, `process.env.HUAWEI_AK`).
+  - Use `import.meta.env.VITE_VAR` in frontend code (e.g. `import.meta.env.VITE_API_BASE`).
+  - Reference `.env.example` (root) or `server/.env.example` for available variable names.
+  - **Never hardcode** API keys, secrets, or credentials in source code.
 
 ---
 
@@ -155,9 +164,16 @@ Key folders and what they're for:
 | `JWT_SECRET` | Yes (multi-user) | JWT signing secret |
 | `NODE_ENV` | No | `development` or `production` |
 | `SERVER_PORT` | No | Default 3001 |
+| `STORAGE_DIR` | Docker | Path to storage (e.g. /app/server/storage) |
 | `ENABLE_HTTPS` | No | Enable SSL |
 | `DATABASE_URL` | If using PostgreSQL | Prisma connection string |
-| `OPENAI_API_KEY` | For LLM | And other provider keys as needed |
+| `OPEN_AI_KEY` | For LLM | And other provider keys as needed |
+| `HUAWEI_AK` | Huawei Cloud | Access Key for SWR/ECS |
+| `HUAWEI_SK` | Huawei Cloud | Secret Key for SWR/ECS |
+| `HUAWEI_SWR_REGION` | Huawei Cloud | SWR region (e.g. ap-southeast-2) |
+| `HUAWEI_SWR_ORG` | Huawei Cloud | SWR organization name |
+
+See `.env.example` (root) for full list of all credentials.
 
 ---
 
@@ -170,3 +186,4 @@ Key folders and what they're for:
 - **Use Tailwind** for styling. Don't add new CSS frameworks or inline styles.
 - **Follow existing patterns** in `server/models/` and `frontend/src/models/` for API calls.
 - **No secrets in source.** Use `.env` and never commit API keys or tokens.
+- **Credentials in code:** When generating code that needs credentials, use `process.env.VAR_NAME` (server) or `import.meta.env.VITE_VAR` (frontend). Fill variable names from `.env.example`—never hardcode secrets.

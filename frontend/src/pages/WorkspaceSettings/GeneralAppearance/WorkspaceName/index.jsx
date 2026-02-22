@@ -5,7 +5,7 @@ export default function WorkspaceName({ workspace, setHasChanges }) {
         <label htmlFor="name" className="block input-label">
           Workspace Name
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           This will only change the display name of your workspace.
         </p>
       </div>
@@ -15,7 +15,7 @@ export default function WorkspaceName({ workspace, setHasChanges }) {
         minLength={2}
         maxLength={80}
         defaultValue={workspace?.name}
-        className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="theme-input block w-full"
         placeholder="My Workspace"
         required={true}
         autoComplete="off"

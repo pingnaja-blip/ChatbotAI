@@ -2,12 +2,21 @@ import React, { useState, createContext } from "react";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 
 export const AuthContext = createContext(null);
+function safeParseUser(value) {
+  if (value == null || value === "" || value === "undefined") return null;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+}
+
 export function ContextWrapper(props) {
   const localUser = localStorage.getItem(AUTH_USER);
   const localAuthToken = localStorage.getItem(AUTH_TOKEN);
   const [store, setStore] = useState({
-    user: localUser ? JSON.parse(localUser) : null,
-    authToken: localAuthToken ? localAuthToken : null,
+    user: safeParseUser(localUser),
+    authToken: localAuthToken && localAuthToken !== "undefined" ? localAuthToken : null,
   });
 
   const [actions] = useState({

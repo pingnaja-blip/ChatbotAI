@@ -10,7 +10,7 @@ export default function GroqAiOptions({ settings }) {
           name="GroqApiKey"
           className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
           placeholder="Groq API Key"
-          defaultValue={settings?.GroqApiKey ? "*".repeat(20) : ""}
+          defaultValue={settings?.GroqApiKey ?? ""}
           required={true}
           autoComplete="off"
           spellCheck={false}

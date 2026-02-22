@@ -21,7 +21,7 @@ export default function TextSizeButton() {
       >
         <TextT
           weight="fill"
-          className="w-6 h-6 pointer-events-none text-white"
+          className="w-6 h-6 pointer-events-none text-theme-text"
         />
         <Tooltip
           id="tooltip-text-size-btn"
@@ -85,7 +85,7 @@ function TextSizeMenu({ showing, setShowing, buttonRef }) {
           }`}
         >
           <div className="w-full flex-col text-left flex pointer-events-none">
-            <div className="text-white text-xs">Small</div>
+            <div className="text-theme-text text-xs">Small</div>
           </div>
         </button>
 
@@ -100,7 +100,7 @@ function TextSizeMenu({ showing, setShowing, buttonRef }) {
           }`}
         >
           <div className="w-full flex-col text-left flex pointer-events-none">
-            <div className="text-white text-sm">Normal</div>
+            <div className="text-theme-text text-sm">Normal</div>
           </div>
         </button>
 
@@ -115,7 +115,7 @@ function TextSizeMenu({ showing, setShowing, buttonRef }) {
           }`}
         >
           <div className="w-full flex-col text-left flex pointer-events-none">
-            <div className="text-white text-[16px]">Large</div>
+            <div className="text-theme-text text-[16px]">Large</div>
           </div>
         </button>
       </div>

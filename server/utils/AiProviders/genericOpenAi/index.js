@@ -4,21 +4,31 @@ const {
 } = require("../../helpers/chat/responses");
 const { toValidNumber } = require("../../http");
 
+const DEEPSEEK_BASE = "https://api.deepseek.com";
+const QWEN_BASE =
+  "https://dashscope-intl.aliyuncs.com/compatible-mode/v1";
+
 class GenericOpenAiLLM {
-  constructor(embedder = null, modelPreference = null) {
+  constructor(embedder = null, modelPreference = null, config = {}) {
     const { OpenAI: OpenAIApi } = require("openai");
-    if (!process.env.GENERIC_OPEN_AI_BASE_PATH)
+    const basePath =
+      config.basePath ?? process.env.GENERIC_OPEN_AI_BASE_PATH;
+    const apiKey =
+      config.apiKey ?? process.env.GENERIC_OPEN_AI_API_KEY ?? null;
+
+    if (!basePath)
       throw new Error(
         "GenericOpenAI must have a valid base path to use for the api."
       );
 
-    this.basePath = process.env.GENERIC_OPEN_AI_BASE_PATH;
+    this.basePath = basePath;
     this.openai = new OpenAIApi({
       baseURL: this.basePath,
-      apiKey: process.env.GENERIC_OPEN_AI_API_KEY ?? null,
+      apiKey,
     });
     this.model =
-      modelPreference ?? process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
+      modelPreference ?? config.model ?? process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
+    this._configTokenLimit = config.tokenLimit;
     this.maxTokens = process.env.GENERIC_OPEN_AI_MAX_TOKENS
       ? toValidNumber(process.env.GENERIC_OPEN_AI_MAX_TOKENS, 1024)
       : 1024;
@@ -58,7 +68,10 @@ class GenericOpenAiLLM {
   // Ensure the user set a value for the token limit
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
-    const limit = process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT || 4096;
+    const limit =
+      this._configTokenLimit ||
+      process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT ||
+      4096;
     if (!limit || isNaN(Number(limit)))
       throw new Error("No token context limit was set.");
     return Number(limit);
@@ -137,4 +150,6 @@ class GenericOpenAiLLM {
 
 module.exports = {
   GenericOpenAiLLM,
+  DEEPSEEK_BASE,
+  QWEN_BASE,
 };

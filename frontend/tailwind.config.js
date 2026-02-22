@@ -21,38 +21,38 @@ export default {
         "360": "360deg"
       },
       colors: {
-        "black-900": "#1B5E20",
-        accent: "#81C784",
-        "sidebar-button": "#A5D6A7",
-        sidebar: "#C8E6C9",
-        "historical-msg-system": "rgba(27, 94, 32, 0.08)",
-        "historical-msg-user": "#DCEDC8",
-        outline: "#66BB6A",
-        "theme-text": "#1B5E20",
-        "theme-text-muted": "#2E7D32",
-        "dropdown-bg": "#F1F8E9",
-        "dropdown-border": "#66BB6A"
+        "black-900": "#1f2937",
+        accent: "#4f46e5",
+        "sidebar-button": "#e5e7eb",
+        sidebar: "#f5f5f5",
+        "historical-msg-system": "#f9fafb",
+        "historical-msg-user": "#e5e7eb",
+        outline: "#d1d5db",
+        "theme-text": "#1f2937",
+        "theme-text-muted": "#6b7280",
+        "dropdown-bg": "#ffffff",
+        "dropdown-border": "#d1d5db"
       },
       backgroundImage: {
         "preference-gradient":
-          "linear-gradient(180deg, #A5D6A7 0%, rgba(165, 214, 167, 0.4) 100%)",
+          "linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%)",
         "chat-msg-user-gradient":
-          "linear-gradient(180deg, #C8E6C9 0%, #DCEDC8 100%)",
+          "linear-gradient(180deg, #e5e7eb 0%, #f3f4f6 100%)",
         "selected-preference-gradient":
-          "linear-gradient(180deg, #81C784 0%, rgba(129, 199, 132, 0.3) 100%)",
-        "main-gradient": "linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%)",
-        "modal-gradient": "linear-gradient(180deg, #F1F8E9 0%, #DCEDC8 100%)",
-        "sidebar-gradient": "linear-gradient(90deg, #A5D6A7 0%, #C8E6C9 100%)",
-        "login-gradient": "linear-gradient(180deg, #E8F5E9 0%, #C8E6C9 100%)",
+          "linear-gradient(180deg, #e0e7ff 0%, #c7d2fe 100%)",
+        "main-gradient": "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
+        "modal-gradient": "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
+        "sidebar-gradient": "linear-gradient(90deg, #f0f0f0 0%, #f5f5f5 100%)",
+        "login-gradient": "linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%)",
         "menu-item-gradient":
-          "linear-gradient(90deg, #C8E6C9 0%, #DCEDC8 100%)",
+          "linear-gradient(90deg, #f5f5f5 0%, #e5e7eb 100%)",
         "menu-item-selected-gradient":
-          "linear-gradient(90deg, #81C784 0%, #A5D6A7 100%)",
+          "linear-gradient(90deg, #e0e7ff 0%, #c7d2fe 100%)",
         "workspace-item-gradient":
-          "linear-gradient(90deg, #C8E6C9 0%, #DCEDC8 100%)",
+          "linear-gradient(90deg, #f5f5f5 0%, #e5e7eb 100%)",
         "workspace-item-selected-gradient":
-          "linear-gradient(90deg, #81C784 0%, #A5D6A7 100%)",
-        "switch-selected": "linear-gradient(146deg, #66BB6A 0%, #81C784 100%)"
+          "linear-gradient(90deg, #e0e7ff 0%, #c7d2fe 100%)",
+        "switch-selected": "linear-gradient(146deg, #4f46e5 0%, #6366f1 100%)"
       },
       fontFamily: {
         sans: [

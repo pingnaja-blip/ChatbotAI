@@ -1,6 +1,9 @@
-process.env.NODE_ENV === "development"
-  ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
-  : require("dotenv").config();
+const path = require("path");
+const envPath =
+  process.env.NODE_ENV === "development"
+    ? path.join(__dirname, "../.env.development")
+    : path.join(__dirname, "../.env");
+require("dotenv").config({ path: envPath });
 
 const { default: slugify } = require("slugify");
 const { isValidUrl, safeJsonParse } = require("../utils/http");
@@ -342,23 +345,23 @@ const SystemSettings = {
 
   llmPreferenceKeys: function () {
     return {
-      // OpenAI Keys
-      OpenAiKey: !!process.env.OPEN_AI_KEY,
+      // OpenAI Keys (load from .env as default)
+      OpenAiKey: process.env.OPEN_AI_KEY || "",
       OpenAiModelPref: process.env.OPEN_MODEL_PREF || "gpt-4o",
 
       // Azure + OpenAI Keys
       AzureOpenAiEndpoint: process.env.AZURE_OPENAI_ENDPOINT,
-      AzureOpenAiKey: !!process.env.AZURE_OPENAI_KEY,
+      AzureOpenAiKey: process.env.AZURE_OPENAI_KEY || "",
       AzureOpenAiModelPref: process.env.OPEN_MODEL_PREF,
       AzureOpenAiEmbeddingModelPref: process.env.EMBEDDING_MODEL_PREF,
       AzureOpenAiTokenLimit: process.env.AZURE_OPENAI_TOKEN_LIMIT || 4096,
 
       // Anthropic Keys
-      AnthropicApiKey: !!process.env.ANTHROPIC_API_KEY,
+      AnthropicApiKey: process.env.ANTHROPIC_API_KEY || "",
       AnthropicModelPref: process.env.ANTHROPIC_MODEL_PREF || "claude-2",
 
       // Gemini Keys
-      GeminiLLMApiKey: !!process.env.GEMINI_API_KEY,
+      GeminiLLMApiKey: process.env.GEMINI_API_KEY || "",
       GeminiLLMModelPref: process.env.GEMINI_LLM_MODEL_PREF || "gemini-pro",
       GeminiSafetySetting:
         process.env.GEMINI_SAFETY_SETTING || "BLOCK_MEDIUM_AND_ABOVE",
@@ -369,7 +372,7 @@ const SystemSettings = {
       LMStudioModelPref: process.env.LMSTUDIO_MODEL_PREF,
 
       // LocalAI Keys
-      LocalAiApiKey: !!process.env.LOCAL_AI_API_KEY,
+      LocalAiApiKey: process.env.LOCAL_AI_API_KEY || "",
       LocalAiBasePath: process.env.LOCAL_AI_BASE_PATH,
       LocalAiModelPref: process.env.LOCAL_AI_MODEL_PREF,
       LocalAiTokenLimit: process.env.LOCAL_AI_MODEL_TOKEN_LIMIT,
@@ -380,23 +383,23 @@ const SystemSettings = {
       OllamaLLMTokenLimit: process.env.OLLAMA_MODEL_TOKEN_LIMIT,
 
       // TogetherAI Keys
-      TogetherAiApiKey: !!process.env.TOGETHER_AI_API_KEY,
+      TogetherAiApiKey: process.env.TOGETHER_AI_API_KEY || "",
       TogetherAiModelPref: process.env.TOGETHER_AI_MODEL_PREF,
 
       // Perplexity AI Keys
-      PerplexityApiKey: !!process.env.PERPLEXITY_API_KEY,
+      PerplexityApiKey: process.env.PERPLEXITY_API_KEY || "",
       PerplexityModelPref: process.env.PERPLEXITY_MODEL_PREF,
 
       // OpenRouter Keys
-      OpenRouterApiKey: !!process.env.OPENROUTER_API_KEY,
+      OpenRouterApiKey: process.env.OPENROUTER_API_KEY || "",
       OpenRouterModelPref: process.env.OPENROUTER_MODEL_PREF,
 
       // Mistral AI (API) Keys
-      MistralApiKey: !!process.env.MISTRAL_API_KEY,
+      MistralApiKey: process.env.MISTRAL_API_KEY || "",
       MistralModelPref: process.env.MISTRAL_MODEL_PREF,
 
       // Groq AI API Keys
-      GroqApiKey: !!process.env.GROQ_API_KEY,
+      GroqApiKey: process.env.GROQ_API_KEY || "",
       GroqModelPref: process.env.GROQ_MODEL_PREF,
 
       // Native LLM Keys
@@ -405,7 +408,7 @@ const SystemSettings = {
 
       // HuggingFace Dedicated Inference
       HuggingFaceLLMEndpoint: process.env.HUGGING_FACE_LLM_ENDPOINT,
-      HuggingFaceLLMAccessToken: !!process.env.HUGGING_FACE_LLM_API_KEY,
+      HuggingFaceLLMAccessToken: process.env.HUGGING_FACE_LLM_API_KEY || "",
       HuggingFaceLLMTokenLimit: process.env.HUGGING_FACE_LLM_TOKEN_LIMIT,
 
       // KoboldCPP Keys
@@ -416,27 +419,27 @@ const SystemSettings = {
       // Text Generation Web UI Keys
       TextGenWebUIBasePath: process.env.TEXT_GEN_WEB_UI_BASE_PATH,
       TextGenWebUITokenLimit: process.env.TEXT_GEN_WEB_UI_MODEL_TOKEN_LIMIT,
-      TextGenWebUIAPIKey: !!process.env.TEXT_GEN_WEB_UI_API_KEY,
+      TextGenWebUIAPIKey: process.env.TEXT_GEN_WEB_UI_API_KEY || "",
 
       // LiteLLM Keys
       LiteLLMModelPref: process.env.LITE_LLM_MODEL_PREF,
       LiteLLMTokenLimit: process.env.LITE_LLM_MODEL_TOKEN_LIMIT,
       LiteLLMBasePath: process.env.LITE_LLM_BASE_PATH,
-      LiteLLMApiKey: !!process.env.LITE_LLM_API_KEY,
+      LiteLLMApiKey: process.env.LITE_LLM_API_KEY || "",
 
-      // Generic OpenAI Keys
+      // Generic OpenAI Keys (DeepSeek etc.)
       GenericOpenAiBasePath: process.env.GENERIC_OPEN_AI_BASE_PATH,
       GenericOpenAiModelPref: process.env.GENERIC_OPEN_AI_MODEL_PREF,
       GenericOpenAiTokenLimit: process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT,
-      GenericOpenAiKey: !!process.env.GENERIC_OPEN_AI_API_KEY,
+      GenericOpenAiKey: process.env.GENERIC_OPEN_AI_API_KEY || "",
       GenericOpenAiMaxTokens: process.env.GENERIC_OPEN_AI_MAX_TOKENS,
 
       // Cohere API Keys
-      CohereApiKey: !!process.env.COHERE_API_KEY,
+      CohereApiKey: process.env.COHERE_API_KEY || "",
       CohereModelPref: process.env.COHERE_MODEL_PREF,
 
       // VoyageAi API Keys
-      VoyageAiApiKey: !!process.env.VOYAGEAI_API_KEY,
+      VoyageAiApiKey: process.env.VOYAGEAI_API_KEY || "",
     };
   },
 

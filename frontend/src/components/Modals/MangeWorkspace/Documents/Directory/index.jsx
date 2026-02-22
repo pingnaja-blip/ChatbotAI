@@ -187,7 +187,7 @@ function Directory({
     <div className="px-8 pb-8">
       <div className="flex flex-col gap-y-6">
         <div className="flex items-center justify-between w-[560px] px-5 relative">
-          <h3 className="text-white text-base font-bold">My Documents</h3>
+          <h3 className="text-slate-800 text-base font-bold">My Documents</h3>
           {showNewFolderInput ? (
             <div className="flex items-center gap-x-2 z-50">
               <input
@@ -195,12 +195,12 @@ function Directory({
                 placeholder="Folder name"
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
-                className="bg-zinc-900 text-white placeholder-white/20 text-sm rounded-md p-2.5 w-[150px] h-[32px]"
+                className="bg-slate-100 text-slate-800 placeholder-slate-500 border border-slate-300 text-sm rounded-md p-2.5 w-[150px] h-[32px]"
               />
               <div className="flex gap-x-2">
                 <button
                   onClick={confirmNewFolder}
-                  className="text-sky-400 rounded-md text-sm font-bold hover:text-sky-500"
+                  className="text-sky-600 rounded-md text-sm font-bold hover:text-sky-700"
                 >
                   Create
                 </button>
@@ -208,19 +208,19 @@ function Directory({
             </div>
           ) : (
             <button
-              className="flex items-center gap-x-2 cursor-pointer px-[14px] py-[7px] -mr-[14px] rounded-lg hover:bg-[#222628]/60"
+              className="flex items-center gap-x-2 cursor-pointer px-[14px] py-[7px] -mr-[14px] rounded-lg hover:bg-slate-200"
               onClick={createNewFolder}
             >
-              <Plus size={18} weight="bold" color="#D3D4D4" />
-              <div className="text-[#D3D4D4] text-xs font-bold leading-[18px]">
+              <Plus size={18} weight="bold" className="text-slate-700" />
+              <div className="text-slate-700 text-xs font-bold leading-[18px]">
                 New Folder
               </div>
             </button>
           )}
         </div>
 
-        <div className="relative w-[560px] h-[310px] bg-zinc-900 rounded-2xl overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 z-10 rounded-t-2xl text-white/80 text-xs grid grid-cols-12 py-2 px-8 border-b border-white/20 shadow-lg bg-zinc-900">
+        <div className="relative w-[560px] h-[310px] bg-slate-100 rounded-2xl overflow-hidden border border-slate-200">
+          <div className="absolute top-0 left-0 right-0 z-10 rounded-t-2xl text-slate-700 text-xs font-semibold grid grid-cols-12 py-2 px-8 border-b border-slate-300 shadow-sm bg-slate-200">
             <p className="col-span-6">Name</p>
             <p className="col-span-3">Date</p>
             <p className="col-span-2">Kind</p>
@@ -230,7 +230,7 @@ function Directory({
             {loading ? (
               <div className="w-full h-full flex items-center justify-center flex-col gap-y-5">
                 <PreLoader />
-                <p className="text-white/80 text-sm font-semibold animate-pulse text-center w-1/3">
+                <p className="text-slate-700 text-sm font-semibold animate-pulse text-center w-1/3">
                   {loadingMessage}
                 </p>
               </div>
@@ -254,7 +254,7 @@ function Directory({
               )
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <p className="text-white text-opacity-40 text-sm font-medium">
+                <p className="text-slate-500 text-sm font-medium">
                   No Documents
                 </p>
               </div>
@@ -262,13 +262,13 @@ function Directory({
           </div>
           {amountSelected !== 0 && (
             <div className="absolute bottom-[12px] left-0 right-0 flex justify-center pointer-events-none">
-              <div className="mx-auto bg-white/40 rounded-lg py-1 px-2 pointer-events-auto">
+              <div className="mx-auto bg-slate-200 rounded-lg py-1 px-2 pointer-events-auto border border-slate-300">
                 <div className="flex flex-row items-center gap-x-2">
                   <button
                     onClick={moveToWorkspace}
                     onMouseEnter={() => setHighlightWorkspace(true)}
                     onMouseLeave={() => setHighlightWorkspace(false)}
-                    className="border-none text-sm font-semibold bg-white h-[30px] px-2.5 rounded-lg hover:text-white hover:bg-neutral-800/80"
+                    className="border-none text-sm font-semibold bg-white h-[30px] px-2.5 rounded-lg text-slate-800 hover:bg-slate-100 border border-slate-300"
                   >
                     Move to Workspace
                   </button>
@@ -277,9 +277,9 @@ function Directory({
                       onClick={() =>
                         setShowFolderSelection(!showFolderSelection)
                       }
-                      className="border-none text-sm font-semibold bg-white h-[32px] w-[32px] rounded-lg text-[#222628] hover:bg-neutral-800/80 flex justify-center items-center group"
+                      className="border border-slate-300 text-sm font-semibold bg-white h-[32px] w-[32px] rounded-lg text-slate-800 hover:bg-slate-100 flex justify-center items-center group"
                     >
-                      <MoveToFolderIcon className="text-[#222628] group-hover:text-white" />
+                      <MoveToFolderIcon className="text-slate-800 group-hover:text-slate-700" />
                     </button>
                     {showFolderSelection && (
                       <FolderSelectionPopup
@@ -293,7 +293,7 @@ function Directory({
                   </div>
                   <button
                     onClick={deleteFiles}
-                    className="border-none text-sm font-semibold bg-white h-[32px] w-[32px] rounded-lg text-[#222628] hover:text-white hover:bg-neutral-800/80 flex justify-center items-center"
+                    className="border border-slate-300 text-sm font-semibold bg-white h-[32px] w-[32px] rounded-lg text-slate-800 hover:bg-slate-100 flex justify-center items-center"
                   >
                     <Trash size={18} weight="bold" />
                   </button>

@@ -10,6 +10,11 @@ const fileUploadStorage = multer.diskStorage({
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../../collector/hotdir`)
         : path.resolve(process.env.STORAGE_DIR, `../../collector/hotdir`);
+    try {
+      fs.mkdirSync(uploadOutput, { recursive: true });
+    } catch (e) {
+      return cb(e);
+    }
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {

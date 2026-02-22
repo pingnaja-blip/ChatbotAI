@@ -1,8 +1,6 @@
 import HistoricalMessage from "./HistoricalMessage";
 import PromptReply from "./PromptReply";
 import { useEffect, useRef, useState } from "react";
-import { useManageWorkspaceModal } from "../../../Modals/MangeWorkspace";
-import ManageWorkspace from "../../../Modals/MangeWorkspace";
 import { ArrowDown } from "@phosphor-icons/react";
 import debounce from "lodash.debounce";
 import useUser from "@/hooks/useUser";
@@ -13,9 +11,9 @@ export default function ChatHistory({
   workspace,
   sendCommand,
   regenerateAssistantMessage,
+  onUploadDocument,
 }) {
   const { user } = useUser();
-  const { showing, showModal, hideModal } = useManageWorkspaceModal();
   const [isAtBottom, setIsAtBottom] = useState(true);
   const chatHistoryRef = useRef(null);
   const [textSize, setTextSize] = useState("normal");
@@ -91,22 +89,22 @@ export default function ChatHistory({
     return (
       <div className="flex flex-col h-full md:mt-0 pb-44 md:pb-40 w-full justify-end items-center">
         <div className="flex flex-col items-center md:items-start md:max-w-[600px] w-full px-4">
-          <p className="text-white/60 text-lg font-base py-4">
+          <p className="text-theme-text-muted text-lg font-base py-4">
             Welcome to your new workspace.
           </p>
-          {!user || user.role !== "default" ? (
-            <p className="w-full items-center text-white/60 text-lg font-base flex flex-col md:flex-row gap-x-1">
+          {(!user || user.role !== "default") && onUploadDocument ? (
+            <p className="w-full items-center text-theme-text-muted text-lg font-base flex flex-col md:flex-row gap-x-1">
               To get started either{" "}
               <span
                 className="underline font-medium cursor-pointer"
-                onClick={showModal}
+                onClick={onUploadDocument}
               >
                 upload a document
               </span>
               or <b className="font-medium italic">send a chat.</b>
             </p>
           ) : (
-            <p className="w-full items-center text-white/60 text-lg font-base flex flex-col md:flex-row gap-x-1">
+            <p className="w-full items-center text-theme-text-muted text-lg font-base flex flex-col md:flex-row gap-x-1">
               To get started <b className="font-medium italic">send a chat.</b>
             </p>
           )}
@@ -115,40 +113,35 @@ export default function ChatHistory({
             sendSuggestion={handleSendSuggestedMessage}
           />
         </div>
-        {showing && (
-          <ManageWorkspace
-            hideModal={hideModal}
-            providedSlug={workspace.slug}
-          />
-        )}
       </div>
     );
   }
 
   return (
     <div
-      className={`markdown text-white/80 font-light ${textSize} h-full md:h-[83%] pb-[100px] pt-6 md:pt-0 md:pb-20 md:mx-0 overflow-y-scroll flex flex-col justify-start no-scroll`}
+      className={`markdown text-theme-text font-light ${textSize} h-full md:h-[83%] pb-[100px] pt-6 md:pt-0 md:pb-20 md:mx-0 overflow-y-scroll flex flex-col justify-start no-scroll`}
       id="chat-history"
       ref={chatHistoryRef}
     >
       {history.map((props, index) => {
         const isLastBotReply =
           index === history.length - 1 && props.role === "assistant";
+        const listKey = props.uuid ?? props.chatId ?? `chat-${index}`;
 
         if (props?.type === "statusResponse" && !!props.content) {
-          return <StatusResponse key={props.uuid} props={props} />;
+          return <StatusResponse key={listKey} props={props} />;
         }
 
         if (props.type === "rechartVisualize" && !!props.content) {
           return (
-            <Chartable key={props.uuid} workspace={workspace} props={props} />
+            <Chartable key={listKey} workspace={workspace} props={props} />
           );
         }
 
         if (isLastBotReply && props.animate) {
           return (
             <PromptReply
-              key={props.uuid}
+              key={listKey}
               uuid={props.uuid}
               reply={props.content}
               pending={props.pending}
@@ -162,7 +155,7 @@ export default function ChatHistory({
 
         return (
           <HistoricalMessage
-            key={index}
+            key={listKey}
             message={props.content}
             role={props.role}
             workspace={workspace}
@@ -175,16 +168,13 @@ export default function ChatHistory({
           />
         );
       })}
-      {showing && (
-        <ManageWorkspace hideModal={hideModal} providedSlug={workspace.slug} />
-      )}
       {!isAtBottom && (
         <div className="fixed bottom-40 right-10 md:right-20 z-50 cursor-pointer animate-pulse">
           <div className="flex flex-col items-center">
-            <div className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white">
+            <div className="p-1 rounded-full border border-outline bg-gray-100 hover:bg-gray-200 hover:text-theme-text">
               <ArrowDown
                 weight="bold"
-                className="text-white/60 w-5 h-5"
+                className="text-theme-text-muted w-5 h-5"
                 onClick={scrollToBottom}
               />
             </div>
@@ -201,7 +191,7 @@ function StatusResponse({ props }) {
       <div className="py-2 px-4 w-full flex gap-x-5 md:max-w-[80%] flex-col">
         <div className="flex gap-x-5">
           <span
-            className={`text-xs inline-block p-2 rounded-lg text-white/60 font-mono whitespace-pre-line`}
+            className={`text-xs inline-block p-2 rounded-lg text-theme-text-muted font-mono whitespace-pre-line`}
           >
             {props.content}
           </span>
@@ -214,7 +204,7 @@ function StatusResponse({ props }) {
 function WorkspaceChatSuggestions({ suggestions = [], sendSuggestion }) {
   if (suggestions.length === 0) return null;
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-white/60 text-xs mt-10 w-full justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-theme-text-muted text-xs mt-10 w-full justify-center">
       {suggestions.map((suggestion, index) => (
         <button
           key={index}

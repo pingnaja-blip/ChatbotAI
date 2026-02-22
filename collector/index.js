@@ -1,12 +1,16 @@
-process.env.NODE_ENV === "development"
-  ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
-  : require("dotenv").config();
+const path = require("path");
+// Always load .env from the collector directory so DASHSCOPE_API_KEY is found
+const collectorDir = path.resolve(__dirname);
+require("dotenv").config({ path: path.join(collectorDir, ".env") });
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config({ path: path.join(collectorDir, ".env.development") });
+}
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path");
-const { ACCEPTED_MIMES } = require("./utils/constants");
+const fs = require("fs");
+const { ACCEPTED_MIMES, WATCH_DIRECTORY } = require("./utils/constants");
 const { reqBody } = require("./utils/http");
 const { processSingleFile } = require("./processSingleFile");
 const { processLink, getLinkText } = require("./processLink");
@@ -14,6 +18,7 @@ const { wipeCollectorStorage } = require("./utils/files");
 const extensions = require("./extensions");
 const { processRawText } = require("./processRawText");
 const { verifyPayloadIntegrity } = require("./middleware/verifyIntegrity");
+const { validateDashScopeKey } = require("./utils/validateDashScopeKey");
 const app = express();
 
 app.use(cors({ origin: true }));
@@ -129,12 +134,27 @@ app.get("/accepts", function (_, response) {
   response.status(200).json(ACCEPTED_MIMES);
 });
 
+app.get("/validate-dashscope", async function (_, response) {
+  try {
+    const result = await validateDashScopeKey();
+    response.status(200).json(result);
+  } catch (e) {
+    console.error(e);
+    response.status(500).json({ valid: false, error: e?.message || "Validation failed." });
+  }
+});
+
 app.all("*", function (_, response) {
   response.sendStatus(200);
 });
 
 app
   .listen(8888, async () => {
+    try {
+      fs.mkdirSync(WATCH_DIRECTORY, { recursive: true });
+    } catch (e) {
+      console.warn("Could not ensure hotdir exists:", e.message);
+    }
     await wipeCollectorStorage();
     console.log(`Document processor app listening on port 8888`);
   })

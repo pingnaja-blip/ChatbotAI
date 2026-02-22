@@ -19,7 +19,7 @@ export default function ChatTemperatureSettings({
         <label htmlFor="name" className="block input-label">
           LLM Temperature
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           This setting controls how &quot;creative&quot; your LLM responses will
           be.
           <br />
@@ -40,7 +40,7 @@ export default function ChatTemperatureSettings({
         step={0.1}
         onWheel={(e) => e.target.blur()}
         defaultValue={workspace?.openAiTemp ?? defaults.temp}
-        className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="theme-input block w-full"
         placeholder="0.7"
         required={true}
         autoComplete="off"

@@ -53,12 +53,12 @@ export default function WorkspaceFileRow({
   const handleMouseLeave = debounce(handleHideTooltip, 500);
   return (
     <div
-      className={`items-center text-white/80 text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 hover:bg-sky-500/20 cursor-pointer
-          ${isMovedItem ? "bg-green-800/40" : "file-row"}`}
+      className={`items-center text-slate-700 text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 hover:bg-sky-100 cursor-pointer border-b border-slate-200
+          ${isMovedItem ? "bg-green-100" : "file-row bg-slate-50"}`}
     >
       <div className="col-span-5 flex gap-x-[4px] items-center">
         <File
-          className="text-base font-bold w-4 h-4 ml-3 mr-[3px]"
+          className="text-base font-bold w-4 h-4 ml-3 mr-[3px] text-slate-700"
           weight="fill"
         />
         <div
@@ -70,7 +70,7 @@ export default function WorkspaceFileRow({
             {middleTruncate(item.title, 17)}
           </p>
           {showTooltip && (
-            <div className="absolute left-0 bg-white text-black p-1.5 rounded shadow-lg whitespace-nowrap">
+            <div className="absolute left-0 bg-white text-slate-900 p-1.5 rounded shadow-lg whitespace-nowrap border border-slate-200">
               {item.title}
             </div>
           )}
@@ -153,7 +153,7 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
         size={16}
         onClick={updatePinStatus}
         weight={hover || pinned ? "fill" : "regular"}
-        className="outline-none text-base font-bold flex-shrink-0 cursor-pointer"
+        className="outline-none text-base font-bold flex-shrink-0 cursor-pointer text-slate-700"
       />
       <Tooltip
         id={`pin-${item.id}`}
@@ -172,7 +172,7 @@ const RemoveItemFromWorkspace = ({ item, onClick }) => {
         data-tooltip-id={`remove-${item.id}`}
         data-tooltip-content="Remove document from workspace"
         onClick={onClick}
-        className="text-base font-bold w-4 h-4 ml-2 flex-shrink-0 cursor-pointer"
+        className="text-base font-bold w-4 h-4 ml-2 flex-shrink-0 cursor-pointer text-slate-700"
       />
       <Tooltip
         id={`remove-${item.id}`}

@@ -16,7 +16,7 @@ export default function Main() {
 
   return (
     <UserMenu>
-      <div className="w-screen h-screen overflow-hidden bg-sidebar flex">
+      <div className="w-screen h-screen overflow-hidden bg-[#f0f0f0] flex">
         {!isMobile && <Sidebar />}
         <DefaultChatContainer />
       </div>

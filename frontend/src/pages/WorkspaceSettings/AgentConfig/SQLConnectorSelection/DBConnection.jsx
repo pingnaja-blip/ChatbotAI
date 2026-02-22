@@ -31,13 +31,13 @@ export default function DBConnection({ connection, onRemove }) {
       />
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col">
-          <div className="text-sm font-semibold text-white">{database_id}</div>
-          <div className="mt-1 text-xs text-[#D2D5DB]">{engine}</div>
+          <div className="text-sm font-semibold text-theme-text">{database_id}</div>
+          <div className="mt-1 text-xs text-theme-text-muted">{engine}</div>
         </div>
         <button
           type="button"
           onClick={removeConfirmation}
-          className="border-none text-white/40 hover:text-red-500"
+          className="border-none text-theme-text-muted hover:text-red-500"
         >
           <X size={24} />
         </button>

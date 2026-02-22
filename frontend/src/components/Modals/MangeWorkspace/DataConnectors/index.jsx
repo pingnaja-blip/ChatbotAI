@@ -51,12 +51,12 @@ export default function DataConnectors() {
           <MagnifyingGlass
             size={16}
             weight="bold"
-            className="absolute left-4 z-30 text-white"
+            className="absolute left-4 z-30 text-slate-600"
           />
           <input
             type="text"
             placeholder="Search data connectors"
-            className="border-none bg-zinc-600 z-20 pl-10 h-[38px] rounded-full w-full px-4 py-1 text-sm border-2 border-slate-300/40 outline-none focus:border-white text-white"
+            className="border border-slate-300 bg-slate-100 z-20 pl-10 h-[38px] rounded-full w-full px-4 py-1 text-sm outline-none focus:border-slate-500 text-slate-800 placeholder-slate-500"
             autoComplete="off"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -76,14 +76,14 @@ export default function DataConnectors() {
               />
             ))
           ) : (
-            <div className="text-white text-center mt-4">
+            <div className="text-slate-700 text-center mt-4">
               No data connectors found.
             </div>
           )}
         </div>
       </div>
-      <div className="xl:block hidden absolute left-1/2 top-0 bottom-0 w-[0.5px] bg-white/20 -translate-x-1/2"></div>
-      <div className="w-full p-4 top-0 text-white min-w-[500px]">
+      <div className="xl:block hidden absolute left-1/2 top-0 bottom-0 w-[0.5px] bg-slate-300 -translate-x-1/2"></div>
+      <div className="w-full p-4 top-0 text-slate-800 min-w-[500px]">
         {DATA_CONNECTORS[selectedConnector].options}
       </div>
     </div>

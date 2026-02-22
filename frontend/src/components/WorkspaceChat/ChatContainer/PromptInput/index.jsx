@@ -4,7 +4,7 @@ import SlashCommandsButton, {
   useSlashCommands,
 } from "./SlashCommands";
 import debounce from "lodash.debounce";
-import { PaperPlaneRight } from "@phosphor-icons/react";
+import { PaperPlaneRight, Paperclip } from "@phosphor-icons/react";
 import StopGenerationButton from "./StopGenerationButton";
 import AvailableAgentsButton, {
   AvailableAgents,
@@ -21,6 +21,7 @@ export default function PromptInput({
   inputDisabled,
   buttonDisabled,
   sendCommand,
+  onUploadDocument,
 }) {
   const [promptInput, setPromptInput] = useState("");
   const { showAgents, setShowAgents } = useAvailableAgents();
@@ -111,6 +112,19 @@ export default function PromptInput({
         <div className="flex items-center rounded-lg md:mb-4">
           <div className="w-[600px] bg-main-gradient shadow-2xl border border-white/50 rounded-2xl flex flex-col px-4 overflow-hidden">
             <div className="flex items-center w-full border-b-2 border-gray-500/50">
+              {onUploadDocument && (
+                <button
+                  type="button"
+                  onClick={onUploadDocument}
+                  className="inline-flex justify-center items-center rounded-2xl cursor-pointer text-theme-text-muted hover:text-theme-text flex-shrink-0 mr-1 md:mr-2"
+                  data-tooltip-id="upload-document-prompt"
+                  data-tooltip-content="Upload a document"
+                  aria-label="Upload a document"
+                >
+                  <Paperclip className="w-8 h-8 py-2" weight="fill" />
+                  <span className="sr-only">Upload document</span>
+                </button>
+              )}
               <textarea
                 ref={textareaRef}
                 onChange={(e) => {
@@ -129,7 +143,7 @@ export default function PromptInput({
                   adjustTextArea(e);
                 }}
                 value={promptInput}
-                className="cursor-text max-h-[50vh] md:max-h-[350px] md:min-h-[40px] mx-2 md:mx-0 py-2 w-full text-[16px] md:text-md text-white bg-transparent placeholder:text-white/60 resize-none active:outline-none focus:outline-none flex-grow"
+                className="cursor-text max-h-[50vh] md:max-h-[350px] md:min-h-[40px] mx-2 md:mx-0 py-2 w-full text-[16px] md:text-md text-theme-text bg-transparent placeholder:text-theme-text-muted resize-none active:outline-none focus:outline-none flex-grow"
                 placeholder={"Send a message"}
               />
               {buttonDisabled ? (
@@ -139,7 +153,7 @@ export default function PromptInput({
                   <button
                     ref={formRef}
                     type="submit"
-                    className="inline-flex justify-center rounded-2xl cursor-pointer text-white/60 hover:text-white group ml-4"
+                    className="inline-flex justify-center rounded-2xl cursor-pointer text-theme-text-muted hover:text-theme-text group ml-4"
                     data-tooltip-id="send-prompt"
                     data-tooltip-content="Send prompt message to workspace"
                     aria-label="Send prompt message to workspace"
@@ -154,6 +168,14 @@ export default function PromptInput({
                     className="tooltip !text-xs z-99"
                   />
                 </>
+              )}
+              {onUploadDocument && (
+                <Tooltip
+                  id="upload-document-prompt"
+                  place="top"
+                  delayShow={300}
+                  className="tooltip !text-xs z-99"
+                />
               )}
             </div>
             <div className="flex justify-between py-3.5">

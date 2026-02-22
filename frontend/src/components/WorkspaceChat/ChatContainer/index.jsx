@@ -7,13 +7,23 @@ import { isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
 import { useParams } from "react-router-dom";
 import { v4 } from "uuid";
+import useUser from "@/hooks/useUser";
+import { useManageWorkspaceModal } from "../../Modals/MangeWorkspace";
+import ManageWorkspace from "../../Modals/MangeWorkspace";
+import ChatLLMDropdown from "./ChatLLMDropdown";
 import handleSocketResponse, {
   websocketURI,
   AGENT_SESSION_END,
   AGENT_SESSION_START,
 } from "@/utils/chat/agent";
 
-export default function ChatContainer({ workspace, knownHistory = [] }) {
+export default function ChatContainer({
+  workspace,
+  knownHistory = [],
+  onWorkspaceUpdate,
+}) {
+  const { user } = useUser();
+  const { showing, showModal, hideModal } = useManageWorkspaceModal();
   const { threadSlug = null } = useParams();
   const [message, setMessage] = useState("");
   const [loadingResponse, setLoadingResponse] = useState(false);
@@ -236,11 +246,18 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
     >
       {isMobile && <SidebarMobileHeader />}
       <div className="flex flex-col h-full w-full md:mt-0 mt-[40px]">
+        <div className="flex justify-end items-center px-4 py-2 shrink-0 border-b border-outline/50">
+          <ChatLLMDropdown
+            workspace={workspace}
+            onWorkspaceUpdate={onWorkspaceUpdate}
+          />
+        </div>
         <ChatHistory
           history={chatHistory}
           workspace={workspace}
           sendCommand={sendCommand}
           regenerateAssistantMessage={regenerateAssistantMessage}
+          onUploadDocument={showModal}
         />
         <PromptInput
           submit={handleSubmit}
@@ -248,8 +265,15 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
           inputDisabled={loadingResponse}
           buttonDisabled={loadingResponse}
           sendCommand={sendCommand}
+          onUploadDocument={user?.role !== "default" ? showModal : undefined}
         />
       </div>
+      {showing && workspace && (
+        <ManageWorkspace
+          hideModal={hideModal}
+          providedSlug={workspace.slug}
+        />
+      )}
     </div>
   );
 }

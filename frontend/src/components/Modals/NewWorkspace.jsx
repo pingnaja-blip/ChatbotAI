@@ -28,14 +28,14 @@ export default function NewWorkspaceModal({ hideModal = noop }) {
       />
       <div className="relative w-[500px] max-h-full">
         <div className="relative bg-modal-gradient rounded-lg shadow-md border-2 border-accent">
-          <div className="flex items-start justify-between p-4 border-b rounded-t border-white/10">
-            <h3 className="text-xl font-semibold text-white">New Workspace</h3>
+          <div className="flex items-start justify-between p-4 border-b rounded-t border-outline">
+            <h3 className="text-xl font-semibold text-theme-text">New Workspace</h3>
             <button
               onClick={hideModal}
               type="button"
-              className="transition-all duration-300 text-gray-400 bg-transparent hover:border-white/60 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
+              className="transition-all duration-300 text-theme-text-muted bg-transparent hover:border-outline rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-menu-item-selected-gradient hover:border-slate-100 hover:border-opacity-50 border-transparent border"
             >
-              <X className="text-gray-300 text-lg" />
+              <X className="text-theme-text-muted text-lg" />
             </button>
           </div>
           <form ref={formEl} onSubmit={handleCreate}>
@@ -44,7 +44,7 @@ export default function NewWorkspaceModal({ hideModal = noop }) {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-white"
+                    className="block mb-2 text-sm font-medium text-theme-text"
                   >
                     Workspace Name
                   </label>
@@ -52,7 +52,7 @@ export default function NewWorkspaceModal({ hideModal = noop }) {
                     name="name"
                     type="text"
                     id="name"
-                    className="bg-zinc-900 w-full text-white placeholder:text-white/20 text-sm rounded-lg focus:border-white block w-full p-2.5"
+                    className="bg-dropdown-bg w-full text-theme-text placeholder:text-theme-text-muted border border-outline text-sm rounded-lg focus:ring-2 focus:ring-outline focus:border-outline block w-full p-2.5"
                     placeholder="My Workspace"
                     required={true}
                     autoComplete="off"
@@ -63,10 +63,10 @@ export default function NewWorkspaceModal({ hideModal = noop }) {
                 )}
               </div>
             </div>
-            <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-white/10 rounded-b">
+            <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-outline rounded-b">
               <button
                 type="submit"
-                className="transition-all duration-300 border border-slate-200 px-4 py-2 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+                className="transition-all duration-300 border border-slate-200 px-4 py-2 rounded-lg text-theme-text bg-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
               >
                 Save
               </button>

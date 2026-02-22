@@ -75,7 +75,7 @@ export function Chartable({ props, workspace }) {
     switch (chartType) {
       case "area":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             <AreaChart
               className="h-[350px]"
@@ -90,7 +90,7 @@ export function Chartable({ props, workspace }) {
         );
       case "bar":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             <BarChart
               className="h-[350px]"
@@ -107,7 +107,7 @@ export function Chartable({ props, workspace }) {
         );
       case "line":
         return (
-          <div className="bg-zinc-900 p-8 pb-12 rounded-xl text-white h-[500px] w-full">
+          <div className="bg-gray-100 p-8 pb-12 rounded-xl text-theme-text h-[500px] w-full">
             <h3 className="text-lg font-medium">{title}</h3>
             <LineChart
               className="h-[400px]"
@@ -122,7 +122,7 @@ export function Chartable({ props, workspace }) {
         );
       case "composed":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             {showLegend && (
               <Legend
@@ -178,7 +178,7 @@ export function Chartable({ props, workspace }) {
         );
       case "scatter":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             {showLegend && (
               <div className="flex justify-end">
@@ -224,7 +224,7 @@ export function Chartable({ props, workspace }) {
         );
       case "pie":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             <DonutChart
               data={data}
@@ -248,7 +248,7 @@ export function Chartable({ props, workspace }) {
         );
       case "radar":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             {showLegend && (
               <div className="flex justify-end">
@@ -282,7 +282,7 @@ export function Chartable({ props, workspace }) {
         );
       case "radialbar":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             {showLegend && (
               <div className="flex justify-end">
@@ -317,7 +317,7 @@ export function Chartable({ props, workspace }) {
         );
       case "treemap":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             {showLegend && (
               <div className="flex justify-end">
@@ -343,7 +343,7 @@ export function Chartable({ props, workspace }) {
         );
       case "funnel":
         return (
-          <div className="bg-zinc-900 p-8 rounded-xl text-white">
+          <div className="bg-gray-100 p-8 rounded-xl text-theme-text">
             <h3 className="text-lg font-medium">{title}</h3>
             {showLegend && (
               <div className="flex justify-end">
@@ -413,7 +413,7 @@ const customTooltip = (props) => {
   const categoryPayload = payload?.[0];
   if (!categoryPayload) return null;
   return (
-    <div className="w-56 bg-zinc-400 rounded-lg border p-2 text-white">
+    <div className="w-56 bg-gray-200 rounded-lg border border-outline p-2 text-theme-text">
       <div className="flex flex-1 space-x-2.5">
         <div
           className={`flex w-1.5 flex-col bg-${categoryPayload?.color}-500 rounded`}
@@ -447,13 +447,13 @@ function DownloadGraph({ onClick }) {
         <div className="p-1 rounded-full border-none">
           {loading ? (
             <CircleNotch
-              className="text-white/50 w-5 h-5 animate-spin"
+              className="text-theme-text-muted w-5 h-5 animate-spin"
               aria-label="Downloading image..."
             />
           ) : (
             <DownloadSimple
               weight="bold"
-              className="text-white/50 w-5 h-5 hover:text-white"
+              className="text-theme-text-muted w-5 h-5 hover:text-theme-text"
               onClick={handleClick}
               aria-label="Download graph image"
             />

@@ -40,6 +40,7 @@ import KoboldCPPOptions from "@/components/LLMSelection/KoboldCPPOptions";
 import TextGenWebUIOptions from "@/components/LLMSelection/TextGenWebUIOptions";
 import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
 import DeepSeekOptions from "@/components/LLMSelection/DeepSeekOptions";
+import QwenOptions from "@/components/LLMSelection/QwenOptions";
 
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import System from "@/models/system";
@@ -59,6 +60,15 @@ const LLMS = [
     options: (settings) => <DeepSeekOptions settings={settings} />,
     description:
       "Powerful and cost-effective AI models with 128K context. OpenAI-compatible API.",
+    backendValue: "generic-openai",
+  },
+  {
+    name: "Qwen (Alibaba)",
+    value: "qwen",
+    logo: GenericOpenAiLogo,
+    options: (settings) => <QwenOptions settings={settings} />,
+    description:
+      "Alibaba Cloud Qwen models via DashScope. OpenAI-compatible API.",
     backendValue: "generic-openai",
   },
   {
@@ -220,8 +230,13 @@ export default function LLMPreference({
     async function fetchKeys() {
       const _settings = await System.keys();
       setSettings(_settings);
-      let provider = _settings?.LLMProvider || "openai";
-      if (
+      let provider = _settings?.LLMProvider || "deepseek";
+      if (provider === "generic-openai" && _settings?.GenericOpenAiBasePath) {
+        const base = _settings.GenericOpenAiBasePath.toLowerCase();
+        if (base.includes("deepseek")) provider = "deepseek";
+        else if (base.includes("dashscope") || base.includes("aliyuncs"))
+          provider = "qwen";
+      } else if (
         provider === "generic-openai" &&
         _settings?.GenericOpenAiBasePath?.includes("deepseek")
       ) {
@@ -256,6 +271,10 @@ export default function LLMPreference({
     for (var [key, value] of formData.entries()) data[key] = value;
     if (selectedLLM === "deepseek") {
       data.GenericOpenAiBasePath = "https://api.deepseek.com";
+    }
+    if (selectedLLM === "qwen") {
+      data.GenericOpenAiBasePath =
+        "https://dashscope-intl.aliyuncs.com/compatible-mode/v1";
     }
 
     const { error } = await System.updateSystem(data);

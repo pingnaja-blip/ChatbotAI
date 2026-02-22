@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import AnythingLLM from "./media/logo/anything-llm.png";
+import KBTGLogo from "./media/logo/kbtg-regional-team-cropped.png";
 import DefaultLoginLogo from "./media/illustrations/login-logo.svg";
 import System from "./models/system";
 
@@ -19,13 +19,13 @@ export function LogoProvider({ children }) {
           setLoginLogo(isCustomLogo ? logoURL : DefaultLoginLogo);
           setIsCustomLogo(isCustomLogo);
         } else {
-          setLogo(AnythingLLM);
-          setLoginLogo(DefaultLoginLogo);
+          setLogo(KBTGLogo);
+          setLoginLogo(KBTGLogo);
           setIsCustomLogo(false);
         }
       } catch (err) {
-        setLogo(AnythingLLM);
-        setLoginLogo(DefaultLoginLogo);
+        setLogo(KBTGLogo);
+        setLoginLogo(KBTGLogo);
         setIsCustomLogo(false);
         console.error("Failed to fetch logo:", err);
       }

@@ -5,7 +5,7 @@ export default function MaxContextSnippets({ workspace, setHasChanges }) {
         <label htmlFor="name" className="block input-label">
           Max Context Snippets
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-muted text-xs font-medium py-1.5">
           This setting controls the maximum amount of context snippets the will
           be sent to the LLM for per chat or query.
           <br />
@@ -20,7 +20,7 @@ export default function MaxContextSnippets({ workspace, setHasChanges }) {
         step={1}
         onWheel={(e) => e.target.blur()}
         defaultValue={workspace?.topN ?? 4}
-        className="bg-zinc-900 text-white placeholder:text-white/20 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2"
+        className="theme-input block w-full mt-2"
         placeholder="4"
         required={true}
         autoComplete="off"

@@ -20,7 +20,7 @@ export default function ChatModeSelection({ workspace, setHasChanges }) {
               setChatMode("chat");
               setHasChanges(true);
             }}
-            className="transition-bg duration-200 px-6 py-1 text-md text-white/60 disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md"
+            className="transition-bg duration-200 px-6 py-1 text-md text-theme-text-muted disabled:text-theme-text bg-transparent disabled:bg-gray-400 rounded-md"
           >
             Chat
           </button>
@@ -31,12 +31,12 @@ export default function ChatModeSelection({ workspace, setHasChanges }) {
               setChatMode("query");
               setHasChanges(true);
             }}
-            className="transition-bg duration-200 px-6 py-1 text-md text-white/60 disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md"
+            className="transition-bg duration-200 px-6 py-1 text-md text-theme-text-muted disabled:text-theme-text bg-transparent disabled:bg-gray-400 rounded-md"
           >
             Query
           </button>
         </div>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-theme-text-muted">
           {chatMode === "chat" ? (
             <>
               <b>Chat</b> will provide answers with the LLM's general knowledge{" "}
